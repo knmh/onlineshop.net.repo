@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\OnlineShop.Backoffice.WebApiEndpoint.props" />
+</Project>

@@ -1,0 +1,6 @@
+@OnlineShop.Backoffice.WebClient_HostAddress = http://localhost:5029
+
+GET {{OnlineShop.Backoffice.WebClient_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

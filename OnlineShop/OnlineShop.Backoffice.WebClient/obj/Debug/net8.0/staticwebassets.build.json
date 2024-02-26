@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "pKy5AHtr/BFCXOP3tngpwxRmnVy7IWrAgnZYNBjd9Lc=",
+  "Source": "OnlineShop.Backoffice.WebClient",
+  "BasePath": "_content/OnlineShop.Backoffice.WebClient",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
