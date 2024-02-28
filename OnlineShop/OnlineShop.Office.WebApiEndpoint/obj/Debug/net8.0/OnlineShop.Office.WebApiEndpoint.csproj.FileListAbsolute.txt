@@ -9,7 +9,6 @@ H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.csproj.AssemblyReference.cache
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.GeneratedMSBuildEditorConfig.editorconfig
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.AssemblyInfoInputs.cache
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.AssemblyInfo.cs
@@ -153,7 +152,6 @@ H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\runtimeConfig.json
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\appsettings.Development.json
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\appsettings.json
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\runtimeConfig.json
@@ -310,3 +308,4 @@ E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.pdb
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.genruntimeconfig.cache
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\ref\OnlineShop.Office.WebApiEndpoint.dll
+H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.csproj.AssemblyReference.cache

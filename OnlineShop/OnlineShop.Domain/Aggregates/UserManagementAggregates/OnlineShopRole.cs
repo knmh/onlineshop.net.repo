@@ -10,5 +10,6 @@ namespace OnlineShop.Domain.Aggregates.UserManagementAggregates
 {
     public class OnlineShopRole : IdentityRole, IDbSetEntity
     {
+        public int MyProperty { get; set; }
     }
 }

@@ -230,6 +230,10 @@
               "target": "Package",
               "version": "[8.0.2, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -257,6 +261,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             },
             "System.IO": {
               "target": "Package",
@@ -317,6 +325,9 @@
               },
               "H:\\OnlineShop.Net.repo\\OnlineShop\\OnlineShop.EFCore\\OnlineShop.EFCore.csproj": {
                 "projectPath": "H:\\OnlineShop.Net.repo\\OnlineShop\\OnlineShop.EFCore\\OnlineShop.EFCore.csproj"
+              },
+              "H:\\OnlineShop.Net.repo\\OnlineShop\\ResponseFramework\\ResponseFramework.csproj": {
+                "projectPath": "H:\\OnlineShop.Net.repo\\OnlineShop\\ResponseFramework\\ResponseFramework.csproj"
               }
             }
           }
@@ -331,6 +342,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.2, )"
@@ -351,13 +366,21 @@
               "target": "Package",
               "version": "[8.0.2, )"
             },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             },
             "System.IO": {
               "target": "Package",

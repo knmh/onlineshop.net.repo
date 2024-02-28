@@ -50,7 +50,7 @@
 
 //            #region [Returning]
 
-//            return new Response<object>(new PostProductAppDto()
+//            return new Response<object>(new PostProductResultAppDto()
 //            {
 //                Title = model.Title,
 //                UnitPrice = model.UnitPrice
@@ -87,7 +87,7 @@
 
 //            #region [Returning]
 
-//            return new Response<object>(new PutProductAppDto()
+//            return new Response<object>(new PutProductResultAppDto()
 //            {
 //                Title = model.Title,
 //                UnitPrice = model.UnitPrice
@@ -111,7 +111,7 @@
             
 //            #region [Returning]
 
-//            return new Response<object>(new DeleteProductAppDto()
+//            return new Response<object>(new DeleteProductResultAppDto()
 //            {
 //                Id = model.Id
 //            }, true,
@@ -149,4 +149,17 @@
 
 
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
