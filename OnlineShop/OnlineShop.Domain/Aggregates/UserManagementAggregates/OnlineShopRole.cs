@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using OnlineShop.Domain.Frameworks.Abstracts;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace OnlineShop.Domain.Aggregates.UserManagementAggregates
 {
     public class OnlineShopRole : IdentityRole, IDbSetEntity
     {
-        public int MyProperty { get; set; }
+        public bool IsActive { get; set; }
+       
+
     }
 }

@@ -32,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineShop.EFCore\OnlineShop.EFCore.csproj" />
     <ProjectReference Include="..\ResponseFramework\ResponseFramework.csproj" />
   </ItemGroup>
 

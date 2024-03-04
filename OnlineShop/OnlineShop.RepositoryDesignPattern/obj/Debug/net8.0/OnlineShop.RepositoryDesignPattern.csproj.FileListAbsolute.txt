@@ -10,14 +10,8 @@ H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\obj\Debug\n
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\obj\Debug\net8.0\refint\OnlineShop.RepositoryDesignPattern.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\obj\Debug\net8.0\OnlineShop.RepositoryDesignPattern.pdb
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\obj\Debug\net8.0\ref\OnlineShop.RepositoryDesignPattern.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\OnlineShop.Domain.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\OnlineShop.EFCore.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\PublicTools.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\ResponseFramework.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\OnlineShop.EFCore.pdb
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\ResponseFramework.pdb
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\OnlineShop.Domain.pdb
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\PublicTools.pdb
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\obj\Debug\net8.0\OnlineShop.RepositoryDesignPattern.csproj.AssemblyReference.cache
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\obj\Debug\net8.0\OnlineShop.RepositoryDesignPattern.csproj.CopyComplete
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.RepositoryDesignPattern\bin\Debug\net8.0\OnlineShop.RepositoryDesignPattern.runtimeconfig.json

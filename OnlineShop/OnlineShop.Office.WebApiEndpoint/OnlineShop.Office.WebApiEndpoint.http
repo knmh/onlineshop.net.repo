@@ -1,4 +1,4 @@
-@OnlineShop.Office.WebApiEndpoint_HostAddress = http://localhost:5297
+@OnlineShop.Office.WebApiEndpoint_HostAddress = http://localhost:5198
 
 GET {{OnlineShop.Office.WebApiEndpoint_HostAddress}}/weatherforecast/
 Accept: application/json

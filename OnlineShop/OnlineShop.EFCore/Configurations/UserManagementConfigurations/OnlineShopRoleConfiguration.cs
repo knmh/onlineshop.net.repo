@@ -22,7 +22,7 @@ namespace OnlineShop.EFCore.Configurations.UserManagementConfigurations
                 Name = DatabaseConstants.DefaultRoles.GodAdminName,
                 NormalizedName = DatabaseConstants.DefaultRoles.GodAdminNormalizedName,
                 ConcurrencyStamp = DatabaseConstants.DefaultRoles.GodAdminConcurrencyStamp,
-            },  
+            },
             new OnlineShopRole()
             {
                 Id = DatabaseConstants.DefaultRoles.AdminId,
@@ -48,6 +48,6 @@ namespace OnlineShop.EFCore.Configurations.UserManagementConfigurations
 
             );
         }
+    
     }
 }
-

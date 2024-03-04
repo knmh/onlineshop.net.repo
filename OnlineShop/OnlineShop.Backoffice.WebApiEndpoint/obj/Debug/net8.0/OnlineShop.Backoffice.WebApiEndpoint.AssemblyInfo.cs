@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OnlineShop.Backoffice.WebApiEndpoint")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+113fe31c29c21110aecdc691f98806dd60dfafc2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+691d97accaae39346507714b1621eebf7c0a6cbe")]
 [assembly: System.Reflection.AssemblyProductAttribute("OnlineShop.Backoffice.WebApiEndpoint")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OnlineShop.Backoffice.WebApiEndpoint")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

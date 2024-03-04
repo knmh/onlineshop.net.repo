@@ -24,5 +24,6 @@ namespace OnlineShop.EFCore.Configurations.UserManagementConfigurations
                 p.RoleId,
             });
         }
+    
     }
 }

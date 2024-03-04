@@ -24,7 +24,7 @@ namespace OnlineShop.EFCore.Configurations.UserManagementConfigurations
                     LastName = DatabaseConstants.GodAdminUsers.KianmehrLastName,
                     NationalId = DatabaseConstants.GodAdminUsers.KianmehrNationalId,
                     NationalIdConfirmed = true,
-                    UserName = DatabaseConstants.GodAdminUsers.KianmehrUserName,
+                    UserName = DatabaseConstants.GodAdminUsers.KianmehrCellphone,
                     PasswordHash = DatabaseConstants.GodAdminUsers.KianmehrPassword.GetHashCode().ToString(),
                     CellPhone = DatabaseConstants.GodAdminUsers.KianmehrCellphone
                 });
@@ -51,7 +51,7 @@ namespace OnlineShop.EFCore.Configurations.UserManagementConfigurations
             //builder.Property(p => p.DateCreatedLatin).IsRequired().HasDefaultValue(System.DateTime.Now);
             //builder.Property(p => p.IsModified).HasDefaultValue(false);
             //builder.Property(p => p.IsDeleted).HasDefaultValue(false);
-                
+
             //    );
             #endregion
         }

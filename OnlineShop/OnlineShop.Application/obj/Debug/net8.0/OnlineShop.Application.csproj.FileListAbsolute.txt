@@ -14,14 +14,10 @@ H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\obj\Debug\net8.0\Online
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\ResponseFramework.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\ResponseFramework.pdb
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\obj\Debug\net8.0\OnlineShop.Application.csproj.CopyComplete
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.Domain.dll
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.EFCore.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.RepositoryDesignPattern.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\PublicTools.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.RepositoryDesignPattern.pdb
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\PublicTools.pdb
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.Domain.pdb
-H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.EFCore.pdb
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.Application.deps.json
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.Application.dll
 E:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Application\bin\Debug\net8.0\OnlineShop.Application.pdb

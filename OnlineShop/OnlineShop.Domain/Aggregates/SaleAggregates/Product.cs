@@ -11,7 +11,7 @@ namespace OnlineShop.Domain.Aggregates.SaleAggregates
     public class Product : MainEntityBase, IDbSetEntity
     {
         //Key
-        public ProductCategory ProductCategory { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
         //Fields
         public double UnitPrice { get; set; }
     }
