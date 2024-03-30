@@ -327,7 +327,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "H:\\OnlineShop.Net.repo\\OnlineShop\\OnlineShop.Domain\\OnlineShop.Domain.csproj": {
+                "projectPath": "H:\\OnlineShop.Net.repo\\OnlineShop\\OnlineShop.Domain\\OnlineShop.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

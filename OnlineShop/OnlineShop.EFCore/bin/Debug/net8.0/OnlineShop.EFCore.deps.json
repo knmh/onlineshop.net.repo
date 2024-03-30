@@ -1343,6 +1343,7 @@
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.Extensions.Configuration.FileExtensions": "8.0.0",
+          "OnlineShop.Domain": "1.0.0",
           "System.IO": "4.3.0"
         },
         "runtime": {

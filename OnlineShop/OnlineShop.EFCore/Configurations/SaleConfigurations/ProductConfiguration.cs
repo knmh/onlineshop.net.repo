@@ -15,23 +15,32 @@ namespace OnlineShop.EFCore.Configurations.SaleConfigurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable(nameof(Product), DatabaseConstants.Schemas.Sale) // Set the table name and schema
-                 .HasMany(p => p.ProductCategories)
-                  .WithMany(p => p.Products);
-            //.UsingEntity<ProductProductCategory>(
-            //     j => j
-            //    .HasOne<ProductCategory>()
-            //    .WithMany()
-            //    .HasForeignKey(pc => pc.ProductCategoryId),
-            //j => j
-            //    .HasOne<Product>()
-            //    .WithMany()
-            //    .HasForeignKey(pc => pc.ProductId),
-            //j =>
-            //{
-            //    j.ToTable(nameof(ProductProductCategory), DatabaseConstants.Schemas.Sale);
-            //    j.HasKey(pc => new { pc.ProductId, pc.ProductCategoryId });
-            //});
+            builder.ToTable(nameof(Product), DatabaseConstants.Schemas.Sale);
+            builder.HasMany(p => p.ProductCategories)
+            .WithOne(pc => pc.Product);
+           
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //     builder.HasMany(p => p.ProductCategories)
+            //   .WithMany(pc => pc.Products)
+            //   .UsingEntity<ProductProductCategory>(
+            //j => j.HasOne(ppc => ppc.ProductCategory).WithMany(),
+            //j => j.HasOne(ppc => ppc.Product).WithMany()
+            //);
+
 
 
 
@@ -41,8 +50,8 @@ namespace OnlineShop.EFCore.Configurations.SaleConfigurations
             //   .HasMaxLength(256);
 
             //builder.Property(p => p.UnitPrice)
-            //    .IsRequired()
-            //    .HasColumnType("decimal(18, 2)");
+
+            //    .HasColumnType("double");
 
             //builder.Property(p => p.IsActivated)
             //    .IsRequired()

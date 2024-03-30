@@ -7,6 +7,7 @@
     using PublicTools.Constants;
     using OnlineShop.Domain.Frameworks.Abstracts;
     using OnlineShop.EFCore.Frameworks;
+//using OnlineShop.EFCore.Configurations.SaleConfigurations;
 
     namespace OnlineShop.EFCore
     {
@@ -31,16 +32,16 @@
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 modelBuilder.HasDefaultSchema(DatabaseConstants.Schemas.UserManagement);
-             
-                #region [- ApplyConfigurationsFromAssembly() -]
-                modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-                #endregion
+
+               #region [- ApplyConfigurationsFromAssembly() -]
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            #endregion
 
                 #region [- RegisterAllEntities() -]
                 modelBuilder.RegisterAllEntities<IDbSetEntity>(typeof(IDbSetEntity).Assembly);
-                #endregion
-
-                base.OnModelCreating(modelBuilder);
+            #endregion
+          
+            base.OnModelCreating(modelBuilder);
             }
             #endregion
         }

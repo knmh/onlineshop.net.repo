@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Domain.Aggregates.SaleAggregates
 {
-    public class Product : MainEntityBase, IDbSetEntity
+    public class Product : MainEntityBase, IDbSetEntity,IEntity<Guid>
     {
         //Key
         public ICollection<ProductCategory> ProductCategories { get; set; }

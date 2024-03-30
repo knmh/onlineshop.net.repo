@@ -25,9 +25,9 @@ namespace PublicTools.Resources {
     public class MessageResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal MessageResource() {
         }
@@ -66,6 +66,15 @@ namespace PublicTools.Resources {
         public static string Error_AccessDenied {
             get {
                 return ResourceManager.GetString("Error_AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EntityNotFound.
+        /// </summary>
+        public static string Error_EntityNotFound {
+            get {
+                return ResourceManager.GetString("Error_EntityNotFound", resourceCulture);
             }
         }
         

@@ -9,7 +9,7 @@ namespace OnlineShop.Domain.Aggregates.UserManagementAggregates
 {
     public class OnlineShopUserRole:IdentityUserRole<string>
     {
-        public bool IsActive { get; set; }
+       
     }
 }
  

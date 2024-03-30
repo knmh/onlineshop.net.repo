@@ -1,12 +1,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
+using OnlineShop.Application.Services.Contracts;
+using OnlineShop.Application.Services.SaleServices;
+using OnlineShop.Domain.Aggregates.SaleAggregates;
 using OnlineShop.Domain.Aggregates.UserManagementAggregates;
 using OnlineShop.EFCore;
+using OnlineShop.RepositoryDesignPattern.Frameworks.Abstracts;
+using OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 #region [EF Service Configuration]
 var connectionString = builder.Configuration.GetValue<string>("ConnectionStrings:Default");
-builder.Services.AddDbContext<OnlineShopDbContext>(c => c.UseSqlServer(connectionString));
+builder.Services.AddDbContext<OnlineShopDbContext>(c => c.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+
 #endregion
 // Add services to the container.
 #region [Identity Service Configuration]
@@ -20,6 +27,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
 });
+#endregion
+#region [Repository Lifetime Configuration]
+
+builder.Services.AddScoped<IRepository<Product, Guid>, ProductRepository>();
+#endregion
+#region [ApplicationService Lifetime Configuration]
+builder.Services.AddScoped<IProductService, ProductService>();
 #endregion
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

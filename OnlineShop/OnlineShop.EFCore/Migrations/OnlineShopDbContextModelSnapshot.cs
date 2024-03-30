@@ -114,6 +114,132 @@ namespace OnlineShop.EFCore.Migrations
                     b.ToTable("AspNetUserTokens", "UserManagement");
                 });
 
+            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.OrderDetail", b =>
+                {
+                    b.Property<Guid>("OrderHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Code")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateCreatedLatin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateCreatedPersian")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateModifiedLatin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateModifiedPersian")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateSoftDeletedLatin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateSoftDeletedPersian")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsModified")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("OrderHeaderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail", "Sale");
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.OrderHeader", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BuyerRoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BuyerUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("Code")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateCreatedLatin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateCreatedPersian")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateModifiedLatin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateModifiedPersian")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateSoftDeletedLatin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateSoftDeletedPersian")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsModified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SellerRoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SellerUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerUserId", "BuyerRoleId");
+
+                    b.HasIndex("SellerUserId", "SellerRoleId");
+
+                    b.ToTable("OrderHeader", "Sale");
+                });
+
             modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -127,25 +253,21 @@ namespace OnlineShop.EFCore.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DateCreatedPersian")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateModifiedLatin")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DateModifiedPersian")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateSoftDeletedLatin")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DateSoftDeletedPersian")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EntityDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActivated")
@@ -157,12 +279,6 @@ namespace OnlineShop.EFCore.Migrations
                     b.Property<bool>("IsModified")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProductProductCategoryProductCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("ProductProductCategoryProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -171,8 +287,6 @@ namespace OnlineShop.EFCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductProductCategoryProductCategoryId", "ProductProductCategoryProductId");
 
                     b.ToTable("Product", "Sale");
                 });
@@ -198,6 +312,9 @@ namespace OnlineShop.EFCore.Migrations
                     b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -206,24 +323,9 @@ namespace OnlineShop.EFCore.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("ProductCategory", "UserManagement");
-                });
+                    b.HasIndex("ProductId");
 
-            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.ProductProductCategory", b =>
-                {
-                    b.Property<int>("ProductCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("EntityDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProductCategoryId", "ProductId");
-
-                    b.ToTable("ProductProductCategory", "Sale");
+                    b.ToTable("ProductCategory", "Sale");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Aggregates.UserManagementAggregates.OnlineShopRole", b =>
@@ -416,7 +518,7 @@ namespace OnlineShop.EFCore.Migrations
                             AccessFailedCount = 0,
                             CellPhone = "09120816075",
                             CellPhoneConfirmed = false,
-                            ConcurrencyStamp = "c030cce5-7958-4404-990f-125a237d26b8",
+                            ConcurrencyStamp = "570d208c-364a-4493-b115-246518bab5b3",
                             DateCreatedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModifiedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateSoftDeletedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -429,9 +531,9 @@ namespace OnlineShop.EFCore.Migrations
                             LockoutEnabled = false,
                             NationalId = "0020325721",
                             NationalIdConfirmed = true,
-                            PasswordHash = "503843583",
+                            PasswordHash = "-4958007",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6250bf66-52a4-43cd-baa2-59847cc142a1",
+                            SecurityStamp = "379dbd4d-38b7-4e69-bd36-b8611ee4e6d4",
                             TwoFactorEnabled = false,
                             UserName = "09120816075"
                         });
@@ -481,9 +583,6 @@ namespace OnlineShop.EFCore.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
@@ -494,24 +593,8 @@ namespace OnlineShop.EFCore.Migrations
                         new
                         {
                             UserId = "1",
-                            RoleId = "1",
-                            IsActive = false
+                            RoleId = "1"
                         });
-                });
-
-            modelBuilder.Entity("ProductProductCategory", b =>
-                {
-                    b.Property<int>("ProductCategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductCategoriesId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("ProductProductCategory", "UserManagement");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -550,31 +633,59 @@ namespace OnlineShop.EFCore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.Product", b =>
+            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.OrderDetail", b =>
                 {
-                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.ProductProductCategory", null)
-                        .WithMany("Product")
-                        .HasForeignKey("ProductProductCategoryProductCategoryId", "ProductProductCategoryProductId");
+                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.OrderHeader", "OrderHeader")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderHeaderId")
+                        .IsRequired();
+
+                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.OrderHeader", b =>
+                {
+                    b.HasOne("OnlineShop.Domain.Aggregates.UserManagementAggregates.OnlineShopUserRole", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerUserId", "BuyerRoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OnlineShop.Domain.Aggregates.UserManagementAggregates.OnlineShopUserRole", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerUserId", "SellerRoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.ProductCategory", b =>
                 {
                     b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.ProductCategory", "ParentCategory")
                         .WithMany("SubCategories")
-                        .HasForeignKey("ParentCategoryId");
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("ParentCategory");
-                });
-
-            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.ProductProductCategory", b =>
-                {
-                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.ProductCategory", "ProductCategory")
-                        .WithMany()
-                        .HasForeignKey("ProductCategoryId")
+                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProductCategory");
+                    b.Navigation("ParentCategory");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Aggregates.UserManagementAggregates.OnlineShopUserActivity", b =>
@@ -603,29 +714,19 @@ namespace OnlineShop.EFCore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductProductCategory", b =>
+            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.OrderHeader", b =>
                 {
-                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.ProductCategory", null)
-                        .WithMany()
-                        .HasForeignKey("ProductCategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("OrderDetails");
+                });
 
-                    b.HasOne("OnlineShop.Domain.Aggregates.SaleAggregates.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.Product", b =>
+                {
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.ProductCategory", b =>
                 {
                     b.Navigation("SubCategories");
-                });
-
-            modelBuilder.Entity("OnlineShop.Domain.Aggregates.SaleAggregates.ProductProductCategory", b =>
-                {
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

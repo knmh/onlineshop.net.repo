@@ -1,4 +1,5 @@
 ﻿using OnlineShop.Application.Dtos;
+using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
 using OnlineShop.Application.Services.Contracts.IService;
 using ResponseFramework;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Application.Services.Contracts
 {
-    public interface IProductService<PostProductAppDto, PutProductAppDto, DeleteProductAppDto, GetAllProductAppDto> : IService<PostProductAppDto, PutProductAppDto, DeleteProductAppDto, GetAllProductAppDto>
+    public interface IProductService : IService<PostProductAppDto, PutProductAppDto, DeleteProductAppDto, GetAllProductAppDto>
     {
 
     }

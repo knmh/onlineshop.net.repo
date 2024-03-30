@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShop.EFCore.Configurations.SaleConfigurations
+namespace OnlineShop.Application.Dtos.SaleDtos.OrderAppDtos
 {
-    internal class OrderConfiguration
+    public class DeleteOrderAppDto
     {
+        public Guid Id { get; set; }
     }
 }
