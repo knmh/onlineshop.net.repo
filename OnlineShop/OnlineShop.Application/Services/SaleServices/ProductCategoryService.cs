@@ -19,13 +19,13 @@ namespace OnlineShop.Application.Services.SaleServices
         #region [Private State]
         private readonly IRepository<ProductCategory, int> _repository;
         #endregion
-
         #region [Ctor]
         public ProductCategoryService(IRepository<ProductCategory, int> repository)
         {
             _repository = repository;
         }
         #endregion
+
         #region [Post]
         public async Task<IResponse<object>> Post(PostProductCategoryAppDto model)
         {
@@ -36,6 +36,8 @@ namespace OnlineShop.Application.Services.SaleServices
             #region [Task]
             var productCategory = new ProductCategory
             {
+                ParentCategoryId = model.ParentCategoryId,
+                ProductId = model.ProductId,
                 Title = model.Title,
                 Code = model.Code,
                 EntityDescription = model.EntityDescription,
@@ -52,6 +54,8 @@ namespace OnlineShop.Application.Services.SaleServices
 
             return new Response<object>(new PostProductCategoryResultAppDto()
             {
+                ParentCategoryId = model.ParentCategoryId,
+                ProductId = model.ProductId,
                 Title = model.Title,
                 Code = model.Code,
                 EntityDescription = model.EntityDescription,
@@ -71,12 +75,12 @@ namespace OnlineShop.Application.Services.SaleServices
             #endregion
 
             #region [Task]
-            var PutResultId = await _repository.SelectByIdAsync(model.Id);
-            if (PutResultId != null)
-            {
+        
                 var productCategory = new ProductCategory
                 {
                     Id = model.Id,
+                    ParentCategoryId = model.ParentCategoryId,
+                    ProductId = model.ProductId,
                     Title = model.Title,
                     Code = model.Code,
                     EntityDescription = model.EntityDescription,
@@ -85,18 +89,20 @@ namespace OnlineShop.Application.Services.SaleServices
                 };
                 var PutResult = await _repository.UpdateAsync(productCategory);
                 if (!PutResult.IsSuccessful) return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
-            }
+            
             #endregion
             #region [Returning]
 
             return new Response<object>(new PutProductCategoryResultAppDto()
             {
                 Id = model.Id,
+                ParentCategoryId = model.ParentCategoryId,
+                ProductId = model.ProductId,
                 Title = model.Title,
                 Code = model.Code,
                 EntityDescription = model.EntityDescription,
                 IsActivated = model.IsActivated,
-         
+
             }, true,
             MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
 
@@ -138,6 +144,9 @@ namespace OnlineShop.Application.Services.SaleServices
             if (getAllResult.Result == null) return new Response<List<GetAllProductCategoryAppDto>>(MessageResource.Error_FailProcess);
             var Response = getAllResult.Result.Select(item => new GetAllProductCategoryAppDto()
             {
+                Id=item.Id,
+                ParentCategoryId = item.ParentCategoryId,
+                ProductId = item.ProductId,
                 Title = item.Title,
                 Code = item.Code,
                 EntityDescription = item.EntityDescription,

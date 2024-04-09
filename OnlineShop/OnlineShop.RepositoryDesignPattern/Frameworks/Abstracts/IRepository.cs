@@ -15,8 +15,9 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Abstracts
         Task<IResponse<object>> InsertAsync(TEntity entity);
         Task<IResponse<object>> DeleteAsync(TEntity entity);
         Task<IResponse<object>> DeleteAsync(UPrimaryKey id);
+      //  Task<IResponse<object>> UpdateAsync(UPrimaryKey? id);
         Task<IResponse<object>> UpdateAsync(TEntity entity);
-        Task<IResponse<object>> UpdateAsync(UPrimaryKey? id);
+      
         //why  no response
         Task SaveAsync();
 

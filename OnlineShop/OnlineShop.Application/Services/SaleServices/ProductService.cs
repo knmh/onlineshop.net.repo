@@ -20,7 +20,6 @@ namespace OnlineShop.Application.Services.SaleServices
         #region [Private State]
         private readonly IRepository<Product, Guid> _repository;
         #endregion
-
         #region [Ctor]
         public ProductService(IRepository<Product, Guid> repository)
         {
@@ -71,56 +70,6 @@ namespace OnlineShop.Application.Services.SaleServices
 
         }
         #endregion
-
-        #region [Put]
-        public async Task<IResponse<object>> Put(PutProductAppDto model)
-        {
-            #region [Validating Request]
-            if (model.Title == string.Empty) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
-            if (model.UnitPrice.Equals(null)) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
-            #endregion
-
-            #region [Task]
-            var PutResultId = await _repository.SelectByIdAsync(model.Id);
-            if (PutResultId != null)
-            {
-                var product = new Product
-                {
-                    Id = model.Id,
-                    Title = model.Title,
-                    UnitPrice = model.UnitPrice,
-                    Code = model.Code,
-                    EntityDescription = model.EntityDescription,
-                    IsActivated = model.IsActivated,
-                    IsModified = model.IsModified,
-                    IsDeleted = model.IsDeleted
-                };
-                var PutResult = await _repository.UpdateAsync(product);
-                if (!PutResult.IsSuccessful) return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
-            }
-            #endregion
-
-            #region [Returning]
-
-            return new Response<object>(new PutProductResultAppDto()
-            {
-                Id = model.Id,
-                Title = model.Title,
-                UnitPrice = model.UnitPrice,
-                Code = model.Code,
-                EntityDescription = model.EntityDescription,
-                IsActivated = model.IsActivated,
-                IsModified = model.IsModified,
-                IsDeleted = model.IsDeleted
-            }, true,
-            MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
-
-
-            #endregion
-
-        }
-        #endregion
-        //kh vs
         #region [Delete]
         public async Task<IResponse<object>> Delete(DeleteProductAppDto model)
         {
@@ -156,6 +105,7 @@ namespace OnlineShop.Application.Services.SaleServices
             if (getAllResult.Result == null) return new Response<List<GetAllProductAppDto>>(MessageResource.Error_FailProcess);
             var Response = getAllResult.Result.Select(item => new GetAllProductAppDto()
             {
+                Id=item.Id,
                 Title = item.Title,
                 UnitPrice = item.UnitPrice,
                 Code = item.Code,
@@ -169,6 +119,60 @@ namespace OnlineShop.Application.Services.SaleServices
             #endregion
         }
         #endregion
+        #region [Put]
+        public async Task<IResponse<object>> Put(PutProductAppDto model)
+        {
+            #region [Validating Request]
+            if (model.Title == string.Empty) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
+            if (model.UnitPrice.Equals(null)) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
+            #endregion
+
+            #region [Task]
+
+
+            var product = new Product
+            {
+                Id= model.Id,
+                Title = model.Title,
+                UnitPrice = model.UnitPrice,
+                Code = model.Code,
+                EntityDescription = model.EntityDescription,
+                IsActivated = model.IsActivated,
+                IsModified = model.IsModified,
+                IsDeleted = model.IsDeleted,
+            };
+            var PutResult = await _repository.UpdateAsync(product);
+            if (!PutResult.IsSuccessful)
+            {
+                return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
+            }
+            #endregion
+
+            #region [Returning]
+
+            return new Response<object>(new PutProductResultAppDto()
+            {
+                Id = model.Id,
+                Title = model.Title,
+                UnitPrice = model.UnitPrice,
+                Code = model.Code,
+                EntityDescription = model.EntityDescription,
+                IsActivated = model.IsActivated,
+                IsModified = model.IsModified,
+                IsDeleted = model.IsDeleted
+            }, true,
+            MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
+            #endregion
+        }
+        #endregion
+
+
+
+
+
+
+
+
 
     }
 

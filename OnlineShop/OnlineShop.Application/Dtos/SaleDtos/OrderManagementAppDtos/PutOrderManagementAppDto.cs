@@ -1,14 +1,14 @@
-﻿using System;
+﻿using OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderDetailAppDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Application.Dtos.SaleDtos.OrderAppDtos
+namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos
 {
-    public class GetAllOrderAppDto
+    public class PutOrderManagementAppDto
     {
-     
         public Guid Id { get; set; }
         public long Code { get; set; }
         public string Title { get; set; }
@@ -23,5 +23,6 @@ namespace OnlineShop.Application.Dtos.SaleDtos.OrderAppDtos
         public DateTime DateSoftDeletedLatin { get; set; }
         public string? DateSoftDeletedPersian { get; set; }
         public double UnitPrice { get; set; }
+        public Guid OrderHeaderId { get; set; }
     }
 }

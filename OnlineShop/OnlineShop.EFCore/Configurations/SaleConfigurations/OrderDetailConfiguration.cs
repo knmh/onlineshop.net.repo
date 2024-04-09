@@ -15,9 +15,7 @@ namespace OnlineShop.EFCore.Configurations.SaleConfigurations
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.ToTable(nameof(OrderDetail), DatabaseConstants.Schemas.Sale);
-            // Specify the composite primary key using the HasKey method
             builder.HasKey(o => new { o.OrderHeaderId, o.ProductId });
-            // Omit the default "Id" field
             builder.Ignore(o => o.Id);
 
             builder.HasOne(d => d.OrderHeader)

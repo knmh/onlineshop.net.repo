@@ -10,9 +10,9 @@ namespace OnlineShop.Application.Services.Contracts.IService
 {
     public interface IService<PostAppDto, PutAppDto, DeleteAppDto, GetAllAppDto>
     {
-        Task<IResponse<object>> Post(PostAppDto postProductAppDto);
-        Task<IResponse<object>> Put(PutAppDto PutProductAppDto);
-        Task<IResponse<object>> Delete(DeleteAppDto DeleteProductAppDto);
+        Task<IResponse<object>> Post(PostAppDto postAppDto);
+        Task<IResponse<object>> Put(PutAppDto PutAppDto);
+        Task<IResponse<object>> Delete(DeleteAppDto DeleteAppDto);
         Task<IResponse<List<GetAllAppDto>>> GetAll();
     }
 }

@@ -15,7 +15,7 @@ namespace OnlineShop.Domain.Aggregates.SaleAggregates
         public ProductCategory ParentCategory { get; set; } // Reference to the parent category
         public ICollection<ProductCategory> SubCategories { get; set; } // Recursive reference to sub-categories
         public Product Product{ get; set; }
-      //  public Guid ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         //Fields
         public long Code { get; set; }

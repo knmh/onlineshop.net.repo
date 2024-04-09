@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Application.Dtos.SaleDtos.OrderAppDtos
+namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderDetailAppDtos
 {
-    public class PostOrderAppDto
+    public class PutOrderDetailResultAppDto
     {
-       // public Guid Id { get; set; }
-        public long Code { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
+        public double UnitPrice { get; set; }
+        public long Code { get; set; }
         public string? EntityDescription { get; set; }
         public bool IsActivated { get; set; }
         public DateTime DateCreatedLatin { get; set; }
@@ -21,6 +22,5 @@ namespace OnlineShop.Application.Dtos.SaleDtos.OrderAppDtos
         public bool IsDeleted { get; set; }
         public DateTime DateSoftDeletedLatin { get; set; }
         public string? DateSoftDeletedPersian { get; set; }
-        public double UnitPrice { get; set; }
     }
 }

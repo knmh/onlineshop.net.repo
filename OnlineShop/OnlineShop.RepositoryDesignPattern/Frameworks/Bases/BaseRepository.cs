@@ -39,10 +39,12 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Bases
         public virtual async Task<IResponse<object>> InsertAsync(TEntity entity)
         {
          
+          
                 DbSet.Add(entity);
                 await SaveAsync();
                 return new Response<object>(entity);
-            
+
+           
         }
         #endregion
         
@@ -71,35 +73,21 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Bases
         {
 
             var entity = await DbSet.FindAsync(id);
-            await SaveAsync();
+           // await SaveAsync();
             return new Response<TEntity>(entity);
 
         }
         #endregion
 
-        #region [virtual async Task<IResponse<object>> UpdateAsync(TEntity entity)]
-        public virtual async Task<IResponse<object>> UpdateAsync(UPrimaryKey id)
-        {
-            var entityToUpdate = DbSet.FindAsync(id).Result;
-            if (entityToUpdate == null) return new ResponseFramework.Response<object>(MessageResource.Error_FailProcess);
-            DbSet.Update(entityToUpdate);
-            await SaveAsync();
-            return new ResponseFramework.Response<object>(entityToUpdate);
-
-        }
-        #endregion
-        //mine vs ostad
-        #region [virtual async Task<IResponse<object>> UpdateAsync(UPrimaryKey id)]
+        #region [UpdateAsync(TEntity entity)]
         public virtual async Task<IResponse<object>> UpdateAsync(TEntity entity)
         {
-          
-            DbSet.Update(entity);
+            DbSet.Attach(entity);
+            DbContext.Entry(entity).State = EntityState.Modified;
             await SaveAsync();
-            return new Response<object>(entity);
-
+            return new ResponseFramework.Response<object>(entity);
         }
         #endregion
-
 
         #region [virtual async Task<IResponse<object>> DeleteAsync(UPrimaryKey id)]
         public virtual async Task<IResponse<object>> DeleteAsync(UPrimaryKey id)

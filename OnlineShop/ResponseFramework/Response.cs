@@ -10,24 +10,29 @@ namespace ResponseFramework
     public class Response<TResult> : IResponse<TResult> where TResult : class
     {
 
-        public Response(TResult result, bool isSuccessful, string? message, string? errorMessage, HttpStatusCode httpStatusCode)
+        public Response( TResult result, bool isSuccessful, string? message, string? errorMessage, HttpStatusCode httpStatusCode)
         {
+          
             Result = result;
             IsSuccessful = isSuccessful;
             Message = message;
             ErrorMessage = errorMessage;
             HttpStatusCode = httpStatusCode;
+          
         }
+  
 
         public Response(TResult result)
         {
             Result = result;
             if (result != null)
             {
+
                 IsSuccessful = true;
                 Message = "Successful";
                 ErrorMessage = string.Empty;
                 HttpStatusCode = HttpStatusCode.OK;
+                
             }
             else
             {
@@ -35,6 +40,7 @@ namespace ResponseFramework
                 Message = string.Empty;
                 ErrorMessage = "Error";
                 HttpStatusCode = HttpStatusCode.Ambiguous;
+                
             }
         }
        
@@ -53,7 +59,7 @@ namespace ResponseFramework
         public bool IsSuccessful { get; set; }
         public string? Message { get; set; }
         public string? ErrorMessage { get; set; }
-        public HttpStatusCode HttpStatusCode { get; set; }
+        public HttpStatusCode HttpStatusCode {  get; set; }
 
 }
     }

@@ -9,6 +9,8 @@ namespace OnlineShop.Application.Dtos.SaleDtos.ProductCategoryAppDtos
     public class PutProductCategoryAppDto
     {
         public int Id { get; set; }
+        public int? ParentCategoryId { get; set; } 
+        public Guid ProductId { get; set; }
         public string Title { get; set; }
         public string EntityDescription { get; set; }
         public bool IsActivated { get; set; }

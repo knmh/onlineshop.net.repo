@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Application.Services.SaleServices
+namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderHeaderAppDtos
 {
-    public class OrderService
+    public class GetAllOrderHeaderAppDto
     {
     }
 }

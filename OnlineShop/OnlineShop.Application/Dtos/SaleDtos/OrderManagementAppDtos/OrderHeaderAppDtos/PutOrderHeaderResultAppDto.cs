@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShop.RepositoryDesignPattern.Frameworks.Abstracts
+namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderHeaderAppDtos
 {
-    public interface TEntity<T>
+    public class PutOrderHeaderResultAppDto
     {
-        T Id { get; set; }
     }
 }
