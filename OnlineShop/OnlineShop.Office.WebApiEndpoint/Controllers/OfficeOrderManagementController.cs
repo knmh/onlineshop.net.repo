@@ -3,6 +3,7 @@ using OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos;
 using OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderDetailAppDtos;
 using OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderHeaderAppDtos;
 using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
+using OnlineShop.Application.Dtos.SaleDtos.ProductCategoryAppDtos;
 using OnlineShop.Application.Services.Contracts;
 using OnlineShop.Application.Services.SaleServices;
 using OnlineShop.Domain.Aggregates.SaleAggregates;
@@ -15,29 +16,29 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
     [ApiController]
     public class OfficeOrderManagementController : ControllerBase
     {
-        private readonly IOrderManagementService _OrderManagementService;
+        private readonly IOrderService _OrderManagementService;
 
         #region [Ctor]
-        public OfficeOrderManagementController(IOrderManagementService orderManagementService)
+        public OfficeOrderManagementController(IOrderService orderManagementService)
         {
             _OrderManagementService = orderManagementService;
         }
         #endregion
 
         #region [Guard(PostProductAppDto model)]
-        private static JsonResult Guard(PostOrderManagementAppDto model)
+        private static JsonResult Guard(PostOrderAppDto model)
         {
-            foreach (var orderDetail in model.OrderDetails)
+            foreach (var order in model.Orders)
             {
-                if (string.IsNullOrEmpty(orderDetail.Title) || orderDetail.UnitPrice == null)
+                foreach (var orderDetail in order.OrderDetails)
                 {
-                    return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+                    if (string.IsNullOrEmpty(orderDetail.Title) || orderDetail.UnitPrice == null)
+                    {
+                        return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+                    }
                 }
-            }
 
-            foreach (var orderHeader in model.OrderHeaders)
-            {
-                if (string.IsNullOrEmpty(orderHeader.Title))
+                if (string.IsNullOrEmpty(order.OrderHeader.Title))
                 {
                     return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
                 }
@@ -55,9 +56,9 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         //}
         #endregion
 
-
-        #region [PostOrderManagement(PostOrderManagementAppDto model)]
-        public async Task<IActionResult> PostOrderManagement(PostOrderManagementAppDto model)
+        [HttpPost(Name = "PostOrderManagement")]
+        #region [Post(PostOrderManagementAppDto model)]
+        public async Task<IActionResult> Post(PostOrderAppDto model)
         {
             var validationResult = Guard(model);
             if (validationResult.Value != null)
@@ -66,7 +67,35 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
             }
             var postResult = await _OrderManagementService.Post(model);
             return new JsonResult(postResult);
-        } 
+        }
         #endregion
+
+        #region [Put(PutOrderManagementAppDto model)]
+        [HttpPut(Name = "PutOrderManagement")]
+        public async Task<IActionResult> Put(PutOrderAppDto model)
+        {
+           // Guard(model);
+            var putResult = await _OrderManagementService.Put(model);
+            return new JsonResult(putResult);
+        }
+        #endregion
+        #region [Delete(DeleteOrderManagementAppDto model)]
+        [HttpDelete(Name = "DeleteOrderManagement")]
+        public async Task<IActionResult> Delete(DeleteOrderAppDto model)
+        {
+            if (model.Equals(null)) return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+            var deleteResult = await _OrderManagementService.Delete(model);
+            return new JsonResult(deleteResult);
+        }
+        #endregion
+        #region [GetAll()]
+        [HttpGet(Name = "GetOrderManagement")]
+        public async Task<IActionResult> GetAll()
+        {
+            var getAllResult = await _OrderManagementService.GetAll();
+            return new JsonResult(getAllResult);
+        }
+        #endregion
+
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Application.Services.Contracts
 {
-    public interface IOrderManagementService : IService<PostOrderManagementAppDto, PutOrderDetailAppDto, DeleteOrderDetailAppDto, GetAllOrderDetailAppDto>
+    public interface IOrderService : IService<PostOrderAppDto,PutOrderAppDto,DeleteOrderAppDto,GetAllOrderAppDto>
         //IService<PostOrderDetailAppDto, PutOrderDetailAppDto, DeleteOrderDetailAppDtosAppDto, GetAllOrderDetailAppDto>,
         //IService<PostOrderHeaderAppDto, PutOrderHeaderAppDto, DeleteOrderHeaderAppDto, GetAllOrderHeaderAppDto>
     {

@@ -2,7 +2,7 @@
 using OnlineShop.Domain.Frameworks.Abstracts;
 using OnlineShop.Domain.Frameworks.Bases;
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,3 +24,4 @@ namespace OnlineShop.Domain.Aggregates.SaleAggregates
         
     }
 }
+ 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5ee1P0hLBEALBriKgvKS7M/e7cwlY0DLUgGUJkXA3VGbiVBQAhHQhI/ONmdzz3Lf0Ed9nJNB2FQi6Hb+8Yupig==",
+  "dgSpecHash": "WTpe+FLswkvVbrwTvflTjfIz+DkcvMxefW1OqNYI+zLbXf5YEiCRBlEHgsVHRQjTG/8WV0XVReL4qcxYFf2TZA==",
   "success": true,
   "projectFilePath": "H:\\OnlineShop.Net.repo\\OnlineShop\\OnlineShop.Backoffice.WebApiEndpoint\\OnlineShop.Backoffice.WebApiEndpoint.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\8.0.0\\microsoft.extensions.configuration.fileextensions.8.0.0.nupkg.sha512",
+    "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.configuration.json\\8.0.0\\microsoft.extensions.configuration.json.8.0.0.nupkg.sha512",
     "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\hedii\\.nuget\\packages\\microsoft.extensions.dependencymodel\\8.0.0\\microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",

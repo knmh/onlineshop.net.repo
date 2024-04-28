@@ -26,7 +26,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 // Add services to the container.
 
-
+builder.Services.AddDbContext<OnlineShopDbContext>(c => c.UseSqlServer(connectionString));
+builder.Services.AddIdentity<OnlineShopUser, OnlineShopRole>().AddEntityFrameworkStores<OnlineShopDbContext>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

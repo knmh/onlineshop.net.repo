@@ -232,7 +232,8 @@ namespace OnlineShop.EFCore.Migrations
                     Code = table.Column<long>(type: "bigint", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EntityDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActivated = table.Column<bool>(type: "bit", nullable: false)
+                    IsActivated = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -376,7 +377,7 @@ namespace OnlineShop.EFCore.Migrations
                 schema: "UserManagement",
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "CellPhone", "CellPhoneConfirmed", "ConcurrencyStamp", "DateCreatedLatin", "DateCreatedPersian", "DateModifiedLatin", "DateModifiedPersian", "DateSoftDeletedLatin", "DateSoftDeletedPersian", "Email", "EmailConfirmed", "FirstName", "IsActivated", "IsDeleted", "IsModified", "LastName", "Location", "LockoutEnabled", "LockoutEnd", "NationalId", "NationalIdConfirmed", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Picture", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "09120816075", false, "570d208c-364a-4493-b115-246518bab5b3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "Hediyeh", false, false, false, "Kianmehr", null, false, null, "0020325721", true, null, null, "-4958007", null, false, null, "379dbd4d-38b7-4e69-bd36-b8611ee4e6d4", false, "09120816075" });
+                values: new object[] { "1", 0, "09120816075", false, "6c362323-f1aa-4aa6-b076-fec1c675cd05", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "Hediyeh", false, false, false, "Kianmehr", null, false, null, "0020325721", true, null, null, "1579485509", null, false, null, "b62eb0aa-67c1-422b-9188-2f5d7066b4df", false, "09120816075" });
 
             migrationBuilder.InsertData(
                 schema: "UserManagement",

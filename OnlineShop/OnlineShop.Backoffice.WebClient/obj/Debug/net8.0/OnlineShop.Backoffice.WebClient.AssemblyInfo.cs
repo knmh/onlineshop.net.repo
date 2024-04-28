@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OnlineShop.Backoffice.WebClient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fedb074e3d5459597f36122bdeda73e420ec5450")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e0812e5fb8a56fb1c20b46d965ff6c0f6a28246")]
 [assembly: System.Reflection.AssemblyProductAttribute("OnlineShop.Backoffice.WebClient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OnlineShop.Backoffice.WebClient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

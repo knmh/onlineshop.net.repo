@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderDetailAppDtos
 {
-    public class PostOrderDetailAppDto
+    public class PutOrderDetailAppDto
     {
-        public Guid Id { get; set; }
         public long Code { get; set; }
         public string Title { get; set; }
         public string? EntityDescription { get; set; }
@@ -23,5 +22,6 @@ namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderDetai
         public string? DateSoftDeletedPersian { get; set; }
         public double UnitPrice { get; set; }
         public Guid OrderHeaderId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

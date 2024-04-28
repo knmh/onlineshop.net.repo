@@ -38,13 +38,9 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Bases
         #region [virtual async Task<IResponse<object>> InsertAsync(TEntity entity)]
         public virtual async Task<IResponse<object>> InsertAsync(TEntity entity)
         {
-         
-          
                 DbSet.Add(entity);
                 await SaveAsync();
                 return new Response<object>(entity);
-
-           
         }
         #endregion
         
@@ -71,17 +67,15 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Bases
         #region [virtual async Task<IResponse<TEntity>> SelectByIdAsync(UPrimaryKey? id)]
         public virtual async Task<IResponse<TEntity>> SelectByIdAsync(UPrimaryKey? id)
         {
-
             var entity = await DbSet.FindAsync(id);
            // await SaveAsync();
             return new Response<TEntity>(entity);
-
         }
         #endregion
 
         #region [UpdateAsync(TEntity entity)]
         public virtual async Task<IResponse<object>> UpdateAsync(TEntity entity)
-        {
+        { 
             DbSet.Attach(entity);
             DbContext.Entry(entity).State = EntityState.Modified;
             await SaveAsync();

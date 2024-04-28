@@ -309,6 +309,9 @@ namespace OnlineShop.EFCore.Migrations
                     b.Property<bool>("IsActivated")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
 
@@ -518,7 +521,7 @@ namespace OnlineShop.EFCore.Migrations
                             AccessFailedCount = 0,
                             CellPhone = "09120816075",
                             CellPhoneConfirmed = false,
-                            ConcurrencyStamp = "570d208c-364a-4493-b115-246518bab5b3",
+                            ConcurrencyStamp = "6c362323-f1aa-4aa6-b076-fec1c675cd05",
                             DateCreatedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModifiedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateSoftDeletedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -531,9 +534,9 @@ namespace OnlineShop.EFCore.Migrations
                             LockoutEnabled = false,
                             NationalId = "0020325721",
                             NationalIdConfirmed = true,
-                            PasswordHash = "-4958007",
+                            PasswordHash = "1579485509",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "379dbd4d-38b7-4e69-bd36-b8611ee4e6d4",
+                            SecurityStamp = "b62eb0aa-67c1-422b-9188-2f5d7066b4df",
                             TwoFactorEnabled = false,
                             UserName = "09120816075"
                         });
