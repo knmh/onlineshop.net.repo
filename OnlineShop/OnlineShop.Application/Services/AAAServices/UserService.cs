@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Application.Dtos.AAADtos;
 using OnlineShop.Domain.Aggregates.UserManagementAggregates;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,96 +28,153 @@ namespace OnlineShop.Application.Services.AAAServices
         }
         #endregion
 
-        #region [GetAllUsers()]
-        public List<IdentityUser> GetAllUsers()
+        #region [GetAllUsersWithRolesAsync()]
+        public async Task<IEnumerable<GetAllUsersWithRolesAppDto>> GetAllUsersWithRolesAsync()
         {
-            return _userManager.Users.Select(u => new IdentityUser { UserName = u.UserName }).ToList();
+            
+
+            var users = await _userManager.Users.ToListAsync();
+            var userRoleDtos = new List<GetAllUsersWithRolesAppDto>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var roleInfo = new List<string>();
+
+                foreach (var roleName in roles)
+                {
+                    roleInfo.Add(roleName);
+                }
+
+                var userRoleDto = new GetAllUsersWithRolesAppDto
+                {
+                    UserId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    NationalId = user.NationalId,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    CellPhone = user.CellPhone,
+                    Roles = roleInfo
+                };
+
+                userRoleDtos.Add(userRoleDto);
+            }
+
+            return userRoleDtos;
         }
         #endregion
 
         #region [RegisterUserAsync(CreateUserAppDto model)]
         public async Task<IdentityResult> RegisterUserAsync(CreateUserAppDto model)
         {
-            var user = new OnlineShopUser { UserName = model.UserName };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            return result;
-        }
-        #endregion
-
-        #region [DeleteUserAsync(string userId)]
-        public async Task<bool> DeleteUserAsync(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
+            var user = new OnlineShopUser
             {
-                var result = await _userManager.DeleteAsync(user);
-                return result.Succeeded;
-            }
-            return false;
-        }
-        #endregion
-
-        #region [GetEditUserRolesViewModelAsync(EditUserRolesAppDto model)]
-        public async Task<EditUserRolesAppDto> GetEditUserRolesViewModelAsync(EditUserRolesAppDto model)
-        {
-            var user = await _userManager.FindByIdAsync(model.UserId);
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var roles = _roleManager.Roles.Select(r => new IdentityRole { Name = r.Name }).ToList();
-
-            var editUserRolesAppDto = new EditUserRolesAppDto
-            {
-                UserName = user.UserName,
-                UserId = user.Id,
-                Roles = roles,
-                UserRoles = userRoles.ToList()
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                NationalId = model.NationalId,
+                UserName = model.UserName,
+                Email = model.Email,
+                CellPhone = model.CellPhone
             };
 
-            return editUserRolesAppDto;
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                foreach (var roleId in model.RoleId)
+                {
+                    var role = await _roleManager.FindByIdAsync(roleId);
+                    if (role != null)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+                    else
+                    {
+                        // Handle the case where the role is not found
+                        return IdentityResult.Failed(new IdentityError { Description = $"Role with ID '{roleId}' not found." });
+                    }
+                }
+            }
+
+            return result;
         }
+
+
+
         #endregion
+
+        #region [DeleteUserAsync(DeleteUserAppDto model)]
+        public async Task<bool> DeleteUserAsync(DeleteUserAppDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+                return false;
+
+            // Soft delete the user's associated roles
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var roleName in roles)
+            {
+                //var role = await _roleManager.FindByNameAsync(roleName);
+                //if (role != null)
+                //{
+                //    // Soft delete the user-role association
+                //    await _userManager.RemoveFromRoleAsync(user, roleName);
+                //    role.IsDeleted = true;
+                //    await _roleManager.UpdateAsync(role);
+                //}
+            }
+
+            // Soft delete the user
+            user.IsDeleted = true;
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded;
+        }
+
+        #endregion
+
+
 
         #region [UpdateUserRolesAsync(EditUserRolesAppDto model)]
         public async Task<bool> UpdateUserRolesAsync(EditUserRolesAppDto model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
             if (user == null)
-            {
                 return false;
-            }
 
+            // Update user information
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.NationalId = model.NationalId;
+            user.CellPhone = model.CellPhone;
+
+            // Update user roles
             var currentRoles = await _userManager.GetRolesAsync(user);
+            var rolesToAdd = model.Roles.Where(r => !currentRoles.Contains(r)).ToList();
+            var rolesToRemove = currentRoles.Where(r => !model.Roles.Contains(r)).ToList();
 
-            foreach (var item in currentRoles)
+            // Add new roles
+            foreach (var role in rolesToAdd)
             {
-                if (!model.UserRoles.Contains(item))
-                {
-                    var removeRoleResult = await _userManager.RemoveFromRoleAsync(user, item);
-                    if (!removeRoleResult.Succeeded)
-                    {
-                        return false;
-                    }
-                }
+                await _userManager.AddToRoleAsync(user, role);
             }
 
-            foreach (var item in model.Roles)
+            // Remove old roles
+            foreach (var role in rolesToRemove)
             {
-                var isInRole = await _userManager.IsInRoleAsync(user, item.Name);
-                if (!isInRole)
-                {
-                    var addToRoleResult = await _userManager.AddToRoleAsync(user, item.Name);
-                    if (!addToRoleResult.Succeeded)
-                    {
-                        return false;
-                    }
-                }
+                await _userManager.RemoveFromRoleAsync(user, role);
             }
 
-            return true;
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded;
         }
-        #endregion
     }
 
-
+    #endregion
 }
+
+
+
 
 

@@ -124,6 +124,15 @@ namespace PublicTools.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to the value of a field has exceeded the maximum allowed length..
+        /// </summary>
+        public static string Error_MaxLengthField {
+            get {
+                return ResourceManager.GetString("Error_MaxLengthField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process was Successful..
         /// </summary>
         public static string Info_SuccessfullProcess {

@@ -14,6 +14,5 @@ namespace OnlineShop.Domain.Frameworks.Bases
         public string Title { get; set; }
         public string EntityDescription { get; set; }
         public bool IsActivated { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

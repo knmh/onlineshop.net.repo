@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
 using OnlineShop.Application.Services.Contracts;
+using PublicTools.Resources;
 using ResponseFramework;
 
 namespace OnlineShop.Office.WebApiEndpoint.Controllers
@@ -10,7 +12,9 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
     [ApiController]
     public class OfficeProductController : ControllerBase
     {
-        private readonly IProductService _productService;
+        #region [Private State] 
+        private readonly IProductService _productService; 
+        #endregion
 
         #region [Ctor]
         public OfficeProductController(IProductService productService)
@@ -22,18 +26,38 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         #region [Guard(PostProductAppDto model)]
         private static JsonResult Guard(PostProductAppDto model)
         {
-            if (string.IsNullOrEmpty(model.Title)) return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
-            return model.UnitPrice.Equals(null) ? new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField))
-                 : new JsonResult(null);
+            if (string.IsNullOrEmpty(model.Title) || model.Title.Length > 100)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.UnitPrice.Equals(null))
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.Code == null || model.Code == 0 || model.Code.ToString().Length > 50)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.EntityDescription != null && model.EntityDescription.Length > 1000)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MaxLengthField));
+
+            return new JsonResult(null);
         }
         #endregion
         // is it okey
         #region [ Guard(PutProductAppDto model)]
         private static JsonResult Guard(PutProductAppDto model)
         {
-            if (string.IsNullOrEmpty(model.Title)) return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
-            return model.UnitPrice.Equals(null) ? new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField))
-                 : new JsonResult(null);
+            if (string.IsNullOrEmpty(model.Title) || model.Title.Length > 100)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.UnitPrice.Equals(null))
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.Code == null || model.Code == 0 || model.Code.ToString().Length > 50)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.EntityDescription != null && model.EntityDescription.Length > 1000)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MaxLengthField));
+
+            return new JsonResult(null);
         }
         #endregion
 

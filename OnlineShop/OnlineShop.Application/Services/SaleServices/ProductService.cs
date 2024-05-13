@@ -1,9 +1,11 @@
-﻿using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
 using OnlineShop.Application.Services.Contracts;
 using OnlineShop.Application.Services.Contracts.IService;
 using OnlineShop.Domain.Aggregates.SaleAggregates;
 using OnlineShop.Domain.Frameworks.Abstracts;
 using OnlineShop.RepositoryDesignPattern.Frameworks.Abstracts;
+using OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositories;
 using PublicTools.Resources;
 using ResponseFramework;
 using System;
@@ -17,13 +19,16 @@ namespace OnlineShop.Application.Services.SaleServices
 {
     public class ProductService : IProductService
     {
+
         #region [Private State]
-        private readonly IRepository<Product, Guid> _repository;
+        private readonly IProductRepository _repository;
+        private readonly IOrderRepository _orderRepository;
         #endregion
         #region [Ctor]
-        public ProductService(IRepository<Product, Guid> repository)
+        public ProductService(IProductRepository repository, IOrderRepository orderRepository)
         {
             _repository = repository;
+            _orderRepository = orderRepository;
         }
         #endregion
 
@@ -33,18 +38,20 @@ namespace OnlineShop.Application.Services.SaleServices
             #region [Validating Request]
             if (model.Title == string.Empty) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
             if (model.UnitPrice.Equals(null)) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
+            if (model.Code.Equals(null)) return new Response<object>(MessageResource.Error_MandatoryField);
             #endregion
 
             #region [Task]
             var product = new Product
             {
+                Id = Guid.NewGuid(),
                 Title = model.Title,
                 UnitPrice = model.UnitPrice,
                 Code = model.Code,
                 EntityDescription = model.EntityDescription,
                 IsActivated = model.IsActivated,
                 IsModified = model.IsModified,
-                IsDeleted = model.IsDeleted
+                // IsDeleted = model.IsDeleted
             };
 
             var postResult = await _repository.InsertAsync(product);
@@ -56,13 +63,14 @@ namespace OnlineShop.Application.Services.SaleServices
 
             return new Response<object>(new PostProductResultAppDto()
             {
+                Id = Guid.NewGuid(),
                 Title = model.Title,
                 UnitPrice = model.UnitPrice,
                 Code = model.Code,
                 EntityDescription = model.EntityDescription,
                 IsActivated = model.IsActivated,
                 IsModified = model.IsModified,
-                IsDeleted = model.IsDeleted
+                //IsDeleted = model.IsDeleted
             }, true,
             MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
 
@@ -74,19 +82,26 @@ namespace OnlineShop.Application.Services.SaleServices
         public async Task<IResponse<object>> Delete(DeleteProductAppDto model)
         {
             #region [Task]
-            var deleteResult = await _repository.DeleteAsync(model.Id);
-            if (!deleteResult.IsSuccessful) return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
+            var product = await _repository.GetProductById(model.Id, true);
+            if (product == null || product.Result.IsDeleted)
+                return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
 
+            var isProductUsedInOrderDetails = await _orderRepository.IsProductUsedInOrderDetails(model.Id);
+            if (isProductUsedInOrderDetails)
+                return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
+
+
+            product.Result.IsDeleted = true;
+            var updateResult = await _repository.UpdateAsync(product.Result);
+            if (!updateResult.IsSuccessful)
+                return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
             #endregion
 
             #region [Returning]
-
-            return new Response<object>(new DeleteProductResultAppDto()
+            return new Response<object>(new DeleteProductResultAppDto
             {
                 Id = model.Id
-            }, true,
-            MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
-
+            }, true, MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
             #endregion
         }
         #endregion
@@ -96,7 +111,7 @@ namespace OnlineShop.Application.Services.SaleServices
         {
             #region [Task]
 
-            var getAllResult = await _repository.SelectAllAsync();
+            var getAllResult = await _repository.GetAllProducts(false);
             if (!getAllResult.IsSuccessful) return new Response<List<GetAllProductAppDto>>(MessageResource.Error_FailProcess);
 
             #endregion
@@ -105,7 +120,7 @@ namespace OnlineShop.Application.Services.SaleServices
             if (getAllResult.Result == null) return new Response<List<GetAllProductAppDto>>(MessageResource.Error_FailProcess);
             var Response = getAllResult.Result.Select(item => new GetAllProductAppDto()
             {
-                Id=item.Id,
+                Id = item.Id,
                 Title = item.Title,
                 UnitPrice = item.UnitPrice,
                 Code = item.Code,
@@ -125,23 +140,26 @@ namespace OnlineShop.Application.Services.SaleServices
             #region [Validating Request]
             if (model.Title == string.Empty) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
             if (model.UnitPrice.Equals(null)) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
+            if (model.Code.Equals(null)) return new Response<object>(MessageResource.Error_MandatoryField);
             #endregion
 
             #region [Task]
-
-
-            var product = new Product
+            var product = await _repository.GetProductById(model.Id, false);
+            if (!product.IsSuccessful || product.Result == null)
             {
-                Id= model.Id,
-                Title = model.Title,
-                UnitPrice = model.UnitPrice,
-                Code = model.Code,
-                EntityDescription = model.EntityDescription,
-                IsActivated = model.IsActivated,
-                IsModified = model.IsModified,
-                IsDeleted = model.IsDeleted,
-            };
-            var PutResult = await _repository.UpdateAsync(product);
+                return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
+            }
+
+          
+            product.Result.Title = model.Title;
+            product.Result.UnitPrice = model.UnitPrice;
+            product.Result.Code = model.Code;
+            product.Result.EntityDescription = model.EntityDescription;
+            product.Result.IsActivated = model.IsActivated;
+            product.Result.IsModified = model.IsModified;
+            // IsDeleted = model.IsDeleted,
+
+            var PutResult = await _repository.UpdateAsync(product.Result);
             if (!PutResult.IsSuccessful)
             {
                 return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
@@ -159,23 +177,14 @@ namespace OnlineShop.Application.Services.SaleServices
                 EntityDescription = model.EntityDescription,
                 IsActivated = model.IsActivated,
                 IsModified = model.IsModified,
-                IsDeleted = model.IsDeleted
+                //IsDeleted = model.IsDeleted
             }, true,
             MessageResource.Info_SuccessfullProcess, string.Empty, HttpStatusCode.OK);
             #endregion
         }
         #endregion
 
-
-
-
-
-
-
-
-
     }
-
 
 }
 

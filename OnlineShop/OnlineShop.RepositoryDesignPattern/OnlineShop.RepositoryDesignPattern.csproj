@@ -9,7 +9,10 @@
   <ItemGroup>
     <Folder Include="Contracts\" />
     <Folder Include="Factories\" />
-    <Folder Include="Services\Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

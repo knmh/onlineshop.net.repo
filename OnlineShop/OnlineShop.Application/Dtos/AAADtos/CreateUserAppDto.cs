@@ -16,5 +16,17 @@ namespace OnlineShop.Application.Dtos.AAADtos
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+        
+        public string CellPhone { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string NationalId { get; set; }
+      
+        [Required]
+        public List<string> RoleId { get; set; }
+     
     }
 }

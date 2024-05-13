@@ -8,7 +8,7 @@ namespace OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos
 {
     public class PostProductResultAppDto
     {
-       // public Guid Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public double UnitPrice { get; set; }
         public long Code { get; set; }
@@ -19,7 +19,7 @@ namespace OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos
         public bool IsModified { get; set; }
         public DateTime DateModifiedLatin { get; set; }
         public string? DateModifiedPersian { get; set; }
-        public bool IsDeleted { get; set; }
+         //public bool IsDeleted { get; set; } 
         public DateTime DateSoftDeletedLatin { get; set; }
         public string? DateSoftDeletedPersian { get; set; }
     }

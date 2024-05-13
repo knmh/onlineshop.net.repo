@@ -1,18 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Application.Dtos.AAADtos;
 using OnlineShop.Application.Services.AAAServices;
 using OnlineShop.Domain.Aggregates.UserManagementAggregates;
+using System.Data;
 
 namespace OnlineShop.Backoffice.WebApiEndpoint.Controllers
 {
+    [Authorize]
     [Route("api/BackofficeUser")]
-
-    public class BackofficeUserController : Controller
+    [ApiController]
+    public class BackofficeUserController : ControllerBase
     {
         #region [Private State] 
-       
+
         private readonly UserService _userService;
+
         #endregion
 
         #region [Ctor]
@@ -21,143 +25,84 @@ namespace OnlineShop.Backoffice.WebApiEndpoint.Controllers
             _userService = userService;
         }
         #endregion
-        #region [Index()]
-        public IActionResult Index()
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsersWithRoles()
         {
-            var users = _userService.GetAllUsers();
-            return View(users);
+            var users = await _userService.GetAllUsersWithRolesAsync();
+            return Ok(users);
         }
-        #endregion
 
-        #region [RegisterUser()]
-        public IActionResult RegisterUser()
-        {
+        //[HttpGet("{userId}")]
+        //public async Task<IActionResult> GetUserWithRoles(string userId)
+        //{
+        //    var user = await _userService.GetUserWithRolesAsync(userId);
+        //    if (user == null)
+        //        return NotFound();
 
-            return View();
-        } 
-        #endregion
+        //    return Ok(user);
+        //}
 
+        //[HttpGet("register")]
+        //#region [RegisterUser()]
+        //public IActionResult RegisterUser()
+        //{
+        //    return Ok(new CreateUserAppDto());
+
+        //}
+        //#endregion
         #region [RegisterUser(CreateUserAppDto model)]
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterUser(CreateUserAppDto model)
         {
             if (ModelState.IsValid)
             {
+              
                 var result = await _userService.RegisterUserAsync(model);
                 if (result.Succeeded)
                 {
-                    TempData["Message"] = "User Created";
-                    return RedirectToAction("Index", "User");
+                    return Ok(new { message = ",User Created" });
                 }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError("", error.Description);
+                        return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
                     }
                 }
             }
-            return View(model);
+            return BadRequest(ModelState);
         }
         #endregion
-
-
-        #region [Delete(string id)]
-        [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        #region [Delete(DeleteUserAppDto model)]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteUserAppDto model)
         {
-            var result = await _userService.DeleteUserAsync(id);
+            var result = await _userService.DeleteUserAsync(model);
             if (result)
             {
-                TempData["Message"] = "User is Deleted";
+                return Ok(new { message = "User is Deleted" });
             }
             else
             {
-                TempData["Message"] = "Failed to delete user";
+                return BadRequest(new { message = "Fail Delete" });
             }
-            return RedirectToAction("Index", "Users");
+          
         }
         #endregion
-
         #region [EditUserRoles(EditUserRolesAppDto model)]
+        [HttpPut("editUserRoles")]
         public async Task<IActionResult> EditUserRoles(EditUserRolesAppDto model)
         {
-            var editUserRoles = await _userService.GetEditUserRolesViewModelAsync(model);
-            return View(editUserRoles);
+            var editUserRoles = await _userService.UpdateUserRolesAsync(model);
+            return Ok(editUserRoles);
         }
         #endregion
 
 
-        //#region [EditUserRoles(string userId, List<string> roles)]
-        //[HttpPost]
-        //public async Task<IActionResult> EditUserRoles(string userId, List<string> roles)
-        //{
-        //    var user = await _userService.GetUserByIdAsync(userId); // Assuming GetUserByIdAsync is a method in your UserService
-        //    var currentRoles = await _userService.UserManager.GetRolesAsync(user);
-
-        //    foreach (var item in currentRoles)
-        //    {
-        //        if (!roles.Contains(item))
-        //        {
-        //            await _userService.UserManager.RemoveFromRoleAsync(user, item);
-        //        }
-        //    }
-
-        //    foreach (var item in roles)
-        //    {
-        //        var isInRole = await _userService.UserManager.IsInRoleAsync(user, item);
-        //        if (!isInRole)
-        //        {
-        //            await _userService.UserManager.AddToRoleAsync(user, item);
-        //        }
-        //    }
-
-        //    return RedirectToAction("Index", "User");
-        //}
-        //#endregion
-        //[HttpPost]
-        //public async Task<IActionResult> EditUserRoles(EditUserRolesAppDto model)
-        //{
-        //    var user = await _userManager.FindByIdAsync(model.UserId);
-        //    if (user == null)
-        //    {
-        //        // Handle the case where the user is not found
-        //        return NotFound();
-        //    }
-
-        //    var currentRoles = await _userManager.GetRolesAsync(user);
-
-        //    foreach (var item in currentRoles)
-        //    {
-        //        if (!model.UserRoles.Contains(item))
-        //        {
-        //            var removeRoleResult = await _userManager.RemoveFromRoleAsync(user, item);
-        //            if (!removeRoleResult.Succeeded)
-        //            {
-        //                // Handle the case where removing a role failed
-        //                return BadRequest();
-        //            }
-        //        }
-        //    }
-
-        //    foreach (var item in model.Roles)
-        //    {
-        //        var isInRole = await _userManager.IsInRoleAsync(user, item.Name);
-        //        if (!isInRole)
-        //        {
-        //            var addToRoleResult = await _userManager.AddToRoleAsync(user, item.Name);
-        //            if (!addToRoleResult.Succeeded)
-        //            {
-        //                // Handle the case where adding a role failed
-        //                return BadRequest();
-        //            }
-        //        }
-        //    }
-
-        //    return RedirectToAction("Index", "User");
-        //}
-
+     
+      
     }
 }
-    
+
 

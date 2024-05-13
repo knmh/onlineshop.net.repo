@@ -15,7 +15,7 @@ namespace OnlineShop.Application.Dtos.SaleDtos.OrderManagementAppDtos.OrderDetai
         public bool IsActivated { get; set; }
         public DateTime DateCreatedLatin { get; set; }
         public string? DateCreatedPersian { get; set; }
-        public bool IsModified { get; set; }
+        public bool IsModified {  get; set; }
         public DateTime DateModifiedLatin { get; set; }
         public string? DateModifiedPersian { get; set; }
         public bool IsDeleted { get; set; }

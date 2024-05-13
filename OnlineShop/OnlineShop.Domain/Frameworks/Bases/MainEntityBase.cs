@@ -20,7 +20,7 @@ namespace OnlineShop.Domain.Frameworks.Bases
         public bool IsModified { get; set; }
         public DateTime DateModifiedLatin { get; set; }
         public string? DateModifiedPersian { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }  
         public DateTime DateSoftDeletedLatin { get; set; }
         public string? DateSoftDeletedPersian { get; set; }
     

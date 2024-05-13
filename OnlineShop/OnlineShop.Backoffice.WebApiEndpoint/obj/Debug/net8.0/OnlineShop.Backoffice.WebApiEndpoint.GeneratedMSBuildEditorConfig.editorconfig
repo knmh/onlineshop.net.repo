@@ -17,15 +17,3 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Backoffice.WebApiEndpoint
 build_property._RazorSourceGeneratorDebug = 
-
-[H:/OnlineShop.Net.repo/OnlineShop/OnlineShop.Backoffice.WebApiEndpoint/Views/BackofficeUser/EditUserRoles.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFja29mZmljZVVzZXJcRWRpdFVzZXJSb2xlcy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[H:/OnlineShop.Net.repo/OnlineShop/OnlineShop.Backoffice.WebApiEndpoint/Views/BackofficeUser/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFja29mZmljZVVzZXJcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[H:/OnlineShop.Net.repo/OnlineShop/OnlineShop.Backoffice.WebApiEndpoint/Views/BackofficeUser/RegisterUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFja29mZmljZVVzZXJcUmVnaXN0ZXJVc2VyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 

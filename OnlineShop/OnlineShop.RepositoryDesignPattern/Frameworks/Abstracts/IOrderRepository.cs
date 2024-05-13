@@ -11,7 +11,8 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Abstracts
 {
     public interface IOrderRepository : IRepository<OrderHeader, Guid>
     {
-        Task<IResponse<OrderHeader>> SelectByIdWithDetailsAsync(Guid orderId);
-        Task<IResponse<List<OrderHeader>>> SelectAllWithDetailsAsync(int skip, int take);
+        Task<IResponse<OrderHeader>> SelectByIdWithDetailsAsync(Guid orderId, bool includeDeleted = false);
+        Task<IResponse<List<OrderHeader>>> SelectAllWithDetailsAsync(bool includeDeleted = false);
+        Task<bool> IsProductUsedInOrderDetails(Guid productId);
     }
 }

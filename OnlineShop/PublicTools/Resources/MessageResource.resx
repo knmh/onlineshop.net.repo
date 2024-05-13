@@ -138,6 +138,9 @@
   <data name="Error_MandatoryField" xml:space="preserve">
     <value>Mandatory field. Please fill out this field.</value>
   </data>
+  <data name="Error_MaxLengthField" xml:space="preserve">
+    <value>the value of a field has exceeded the maximum allowed length.</value>
+  </data>
   <data name="Info_SuccessfullProcess" xml:space="preserve">
     <value>Process was Successful.</value>
   </data>

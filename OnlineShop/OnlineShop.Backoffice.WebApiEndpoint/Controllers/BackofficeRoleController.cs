@@ -6,64 +6,89 @@ using OnlineShop.Application.Services.AAAServices;
 
 namespace OnlineShop.Backoffice.WebApiEndpoint.Controllers
 {
-    public class BackofficeRoleController : Controller
+    [Authorize]
+    [Route("api/BackofficeRole")]
+    [ApiController]
+    public class BackofficeRoleController : ControllerBase
     {
+        #region [Private State] 
         private readonly RoleService _roleService;
+        #endregion
 
+        #region [Ctor]
         public BackofficeRoleController(RoleService roleService)
         {
             _roleService = roleService;
         }
+        #endregion
 
-        public IActionResult Index()
+        #region [GetAllRoles()]
+        [HttpGet("getAllRoles", Name = "GetAllRoles")]
+        public async Task<IActionResult> GetAllRoles()
         {
-            var roles = _roleService.GetAllRolesAsync().Result; 
-            return View(roles);
+            var roles = await _roleService.GetAllRolesAsync();
+            return Ok(roles);
         }
-
-        [Authorize]
-        public IActionResult RegisterRole()
-        {
-            return View(new CreateRoleAppDto());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RegisterRole(CreateRoleAppDto createRoleModel)
+        #endregion
+        //[Authorize]
+        //[HttpGet("register", Name = "RegisterRole")]
+        //public IActionResult RegisterRole()
+        //{
+        //    return Ok(new CreateRoleAppDto());
+        //}
+        #region [RegisterRole(CreateRoleAppDto createRoleModel)]
+        [HttpPost("register", Name = "RegisterRole")]
+        public async Task<IActionResult> RegisterRole(CreateRoleAppDto model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _roleService.CreateRoleAsync(createRoleModel.RoleName); 
+                var result = await _roleService.CreateRoleAsync(model);
                 if (result.Succeeded)
                 {
-                    TempData["Message"] = "Role Created";
-                    return RedirectToAction("Index", "Role");
+                    return Ok(new { message = "Role Created" });
                 }
                 else
                 {
-                    foreach (var e in result.Errors)
-                    {
-                        ModelState.AddModelError("", e.Description);
-                    }
+                    return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
                 }
             }
-            return View(createRoleModel);
+            return BadRequest(ModelState);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        #endregion
+        #region [Delete(DeleteRoleAppDto model)]
+        [HttpDelete(Name = "Delete")]
+        public async Task<IActionResult> Delete(DeleteRoleAppDto model)
         {
-            var result = await _roleService.DeleteRoleAsync(id);
+            var result = await _roleService.DeleteRoleAsync(model);
             if (result.Succeeded)
             {
-                TempData["Message"] = "Role is Deleted";
+                return Ok(new { message = "Role is Deleted" });
             }
             else
             {
-                TempData["Message"] = "Fail Delete";
+                return BadRequest(new { message = "Fail Delete" });
             }
-            return RedirectToAction("Index", "Role");
         }
+        #endregion
+        #region [UpdateRole(UpdateRoleAppDto model)]
+        [HttpPut("update", Name = "UpdateRole")]
+        public async Task<IActionResult> UpdateRole(UpdateRoleAppDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _roleService.UpdateRoleAsync(model);
+                if (result.Succeeded)
+                {
+                    return Ok(new { message = "Role Updated" });
+                }
+                else
+                {
+                    return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
+                }
+            }
+            return BadRequest(ModelState);
+        }
+        #endregion
     }
-
 }
 

@@ -14,12 +14,12 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
 {
     [Route("api/OfficeOrderManagement")]
     [ApiController]
-    public class OfficeOrderManagementController : ControllerBase
+    public class OfficeOrderController : ControllerBase
     {
         private readonly IOrderService _OrderManagementService;
 
         #region [Ctor]
-        public OfficeOrderManagementController(IOrderService orderManagementService)
+        public OfficeOrderController(IOrderService orderManagementService)
         {
             _OrderManagementService = orderManagementService;
         }

@@ -29,7 +29,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 #endregion
 #region [Repository Lifetime Configuration]
-builder.Services.AddScoped<IRepository<Product, Guid>, ProductRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 //builder.Services.AddScoped<IRepository<OrderHeader, Guid>, OrderRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 //builder.Services.AddScoped<IRepository<OrderDetail, Guid>, OrderDetailRepository>();
@@ -41,6 +41,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 #endregion
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

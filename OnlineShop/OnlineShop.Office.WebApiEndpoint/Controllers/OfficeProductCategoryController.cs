@@ -11,7 +11,9 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
     [ApiController]
     public class OfficeProductCategoryController : ControllerBase
     {
-        private readonly IProductCategoryService _productCategoryService;
+        #region [Private State] 
+        private readonly IProductCategoryService _productCategoryService; 
+        #endregion
 
         #region [Ctor]
         public OfficeProductCategoryController(IProductCategoryService productCategoryService)
@@ -22,15 +24,16 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         #region [Guard(PostProductAppDto model)]
         private static JsonResult Guard(PostProductCategoryAppDto model)
         {
-            if (string.IsNullOrEmpty(model.Title))
-            {
+            if (string.IsNullOrEmpty(model.Title) || model.Title.Length > 100)
                 return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
-            }
-            else
-            {
 
-                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Info_SuccessfullProcess));
-            }
+            if (model.Code == null || model.Code == 0 || model.Code.ToString().Length > 50)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.EntityDescription != null && model.EntityDescription.Length > 1000)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MaxLengthField));
+
+            return new JsonResult(null);
         }
         #endregion
 
@@ -38,15 +41,16 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         #region [ Guard(PutProductAppDto model)]
         private static JsonResult Guard(PutProductCategoryAppDto model)
         {
-            if (string.IsNullOrEmpty(model.Title))
-            {
+            if (string.IsNullOrEmpty(model.Title) || model.Title.Length > 100)
                 return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
-            }
-            else
-            {
 
-                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Info_SuccessfullProcess));
-            }
+            if (model.Code == null || model.Code == 0 || model.Code.ToString().Length > 50)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
+
+            if (model.EntityDescription != null && model.EntityDescription.Length > 1000)
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MaxLengthField));
+
+            return new JsonResult(null);
         }
         #endregion
 

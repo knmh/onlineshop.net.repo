@@ -24,7 +24,7 @@ namespace OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositor
         #endregion
 
         #region [SelectByIdWithDetailsAsync(Guid orderId)]
-        public async Task<IResponse<OrderHeader>> SelectByIdWithDetailsAsync(Guid orderId)
+        public async Task<IResponse<OrderHeader>> SelectByIdWithDetailsAsync(Guid orderId, bool includeDeleted = false)
         {
             try
             {
@@ -50,14 +50,12 @@ namespace OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositor
         #endregion
 
         #region [SelectAllWithDetailsAsync()]
-        public async Task<IResponse<List<OrderHeader>>> SelectAllWithDetailsAsync(int skip, int take)
+        public async Task<IResponse<List<OrderHeader>>> SelectAllWithDetailsAsync(bool includeDeleted = false)
         {
             try
             {
                 var ordersWithDetails = await DbContext.Set<OrderHeader>()
-                    .Include(o => o.OrderDetails)
-                     .Skip(skip)
-                     .Take(take)
+                    .Include(o => o.OrderDetails)   
                     .ToListAsync();
 
                 return new Response<List<OrderHeader>>(ordersWithDetails);
@@ -66,7 +64,17 @@ namespace OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositor
             {
                 return new Response<List<OrderHeader>>(null, false, MessageResource.Error_InternalServerError, "Internal server error", HttpStatusCode.InternalServerError);
             }
-        } 
+        }
+        #endregion
+
+
+     
+        #region [IsProductUsedInOrderDetails]
+        public async Task<bool> IsProductUsedInOrderDetails(Guid productId)
+        {
+            return await DbContext.Set<OrderDetail>()
+            .AnyAsync(od => od.ProductId == productId);
+        }
         #endregion
     }
 }

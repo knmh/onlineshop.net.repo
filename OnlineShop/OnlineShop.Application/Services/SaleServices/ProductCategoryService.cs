@@ -31,6 +31,8 @@ namespace OnlineShop.Application.Services.SaleServices
         {
             #region [Validating Request]
             if (model.Title == string.Empty) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
+            if (model.Code.Equals(null)) return new Response<object>(MessageResource.Error_MandatoryField);
+
             #endregion
 
             #region [Task]
@@ -72,11 +74,13 @@ namespace OnlineShop.Application.Services.SaleServices
         {
             #region [Validating Request]
             if (model.Title == string.Empty) return new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField);
+            if (model.Code.Equals(null)) return new Response<object>(MessageResource.Error_MandatoryField);
+
             #endregion
 
             #region [Task]
-        
-                var productCategory = new ProductCategory
+
+            var productCategory = new ProductCategory
                 {
                     Id = model.Id,
                     ParentCategoryId = model.ParentCategoryId,

@@ -18,8 +18,11 @@ namespace OnlineShop.EFCore.Configurations.SaleConfigurations
             builder.ToTable(nameof(Product), DatabaseConstants.Schemas.Sale);
             builder.HasMany(p => p.ProductCategories)
             .WithOne(pc => pc.Product);
-           
- 
+
+            //builder.Property(p => p.IsDeleted)
+            //.HasDefaultValue(false);
+
+            //builder.HasQueryFilter(p => !p.IsDeleted);
 
 
 
@@ -67,10 +70,6 @@ namespace OnlineShop.EFCore.Configurations.SaleConfigurations
             //    .HasColumnName("DateSoftDeletePersian")
             //    .HasColumnType("datetime2");
 
-            //builder.Property(p => p.IsDeleted)
-            //    .IsRequired()
-            //    .HasColumnName("IsDeleted")
-            //    .HasColumnType("bit");
 
             //builder.Property(p => p.EntityDescription)
             //    .HasColumnName("EntityDescription")
