@@ -13,7 +13,7 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
     public class OfficeProductController : ControllerBase
     {
         #region [Private State] 
-        private readonly IProductService _productService; 
+        private readonly IProductService _productService;
         #endregion
 
         #region [Ctor]

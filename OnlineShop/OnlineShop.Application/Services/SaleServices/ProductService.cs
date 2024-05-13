@@ -150,7 +150,7 @@ namespace OnlineShop.Application.Services.SaleServices
                 return new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess);
             }
 
-          
+
             product.Result.Title = model.Title;
             product.Result.UnitPrice = model.UnitPrice;
             product.Result.Code = model.Code;

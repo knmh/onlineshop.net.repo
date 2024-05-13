@@ -172,27 +172,27 @@ namespace OnlineShop.Application.Services.SaleServices
             .Where(header => !header.IsDeleted && header.OrderDetails.All(detail => !detail.IsDeleted))
             .Select(header =>
             {
-                        var orderDetails = header.OrderDetails.Select(detail => new GetAllOrderDetailAppDto
-                        {
-                            Code = detail.Code,
-                            Title = detail.Title,
-                            EntityDescription = detail.EntityDescription,
-                            IsActivated = detail.IsActivated,
-                            DateCreatedLatin = detail.DateCreatedLatin,
-                            DateCreatedPersian = detail.DateCreatedPersian,
-                            IsModified = detail.IsModified,
-                            DateModifiedLatin = detail.DateModifiedLatin,
-                            DateModifiedPersian = detail.DateModifiedPersian,
-                            IsDeleted = detail.IsDeleted,
-                            DateSoftDeletedLatin = detail.DateSoftDeletedLatin,
-                            DateSoftDeletedPersian = detail.DateSoftDeletedPersian,
-                            UnitPrice = detail.UnitPrice,
-                            ProductId = detail.ProductId
-                        }).ToList();
+                var orderDetails = header.OrderDetails.Select(detail => new GetAllOrderDetailAppDto
+                {
+                    Code = detail.Code,
+                    Title = detail.Title,
+                    EntityDescription = detail.EntityDescription,
+                    IsActivated = detail.IsActivated,
+                    DateCreatedLatin = detail.DateCreatedLatin,
+                    DateCreatedPersian = detail.DateCreatedPersian,
+                    IsModified = detail.IsModified,
+                    DateModifiedLatin = detail.DateModifiedLatin,
+                    DateModifiedPersian = detail.DateModifiedPersian,
+                    IsDeleted = detail.IsDeleted,
+                    DateSoftDeletedLatin = detail.DateSoftDeletedLatin,
+                    DateSoftDeletedPersian = detail.DateSoftDeletedPersian,
+                    UnitPrice = detail.UnitPrice,
+                    ProductId = detail.ProductId
+                }).ToList();
 
-                        return new GetAllOrderAppDto
-                        {
-                            Orders = new List<GetAllOrderHeaderWithOrderDetailAppDto>
+                return new GetAllOrderAppDto
+                {
+                    Orders = new List<GetAllOrderHeaderWithOrderDetailAppDto>
                     {
                 new GetAllOrderHeaderWithOrderDetailAppDto
                 {
@@ -222,8 +222,8 @@ namespace OnlineShop.Application.Services.SaleServices
                     OrderDetails = orderDetails
                 }
                     }
-                        };
-                    }).ToList();
+                };
+            }).ToList();
                     scope.Complete();
 
 
@@ -308,7 +308,7 @@ namespace OnlineShop.Application.Services.SaleServices
                 }
             }
             #endregion
-        
+
         }
         #endregion
         #region [Post]
@@ -358,7 +358,7 @@ namespace OnlineShop.Application.Services.SaleServices
                             IsModified = headerModel.OrderHeader.IsModified,
                             DateModifiedLatin = headerModel.OrderHeader.DateModifiedLatin,
                             DateModifiedPersian = headerModel.OrderHeader.DateModifiedPersian,
-                           // IsDeleted = headerModel.OrderHeader.IsDeleted,
+                            // IsDeleted = headerModel.OrderHeader.IsDeleted,
                             DateSoftDeletedLatin = headerModel.OrderHeader.DateSoftDeletedLatin,
                             DateSoftDeletedPersian = headerModel.OrderHeader.DateSoftDeletedPersian,
                             SellerUserId = seller.Id,
@@ -366,12 +366,12 @@ namespace OnlineShop.Application.Services.SaleServices
                             BuyerUserId = buyer.Id,
                             BuyerRoleId = buyerRole.Id
                         };
-                         
+
                         orderHeader.OrderDetails = new List<OrderDetail>();
 
                         foreach (var detailModel in headerModel.OrderDetails)
                         {
-                            var product = await _productRepository.GetProductById(detailModel.ProductId,false);
+                            var product = await _productRepository.GetProductById(detailModel.ProductId, false);
                             if (product.IsSuccessful && product.Result != null && !product.Result.IsDeleted)
                             {
 
@@ -402,7 +402,7 @@ namespace OnlineShop.Application.Services.SaleServices
                             }
 
                         }
-                        
+
                         var postOrderHeaderResult = await _orderRepository.InsertAsync(orderHeader);
                         if (!postOrderHeaderResult.IsSuccessful)
                         {
@@ -419,7 +419,7 @@ namespace OnlineShop.Application.Services.SaleServices
                         string.Empty,
                         HttpStatusCode.OK
                     );
-                    
+
                     #endregion
                 }
             }
@@ -432,11 +432,11 @@ namespace OnlineShop.Application.Services.SaleServices
 
         }
         #endregion
-      
+
         #endregion
-    
+
     }
 
 }
- 
+
 
