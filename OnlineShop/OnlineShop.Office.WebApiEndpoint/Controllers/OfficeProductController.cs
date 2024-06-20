@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
 using OnlineShop.Application.Services.Contracts;
@@ -7,7 +8,7 @@ using ResponseFramework;
 
 namespace OnlineShop.Office.WebApiEndpoint.Controllers
 {
-
+    [Authorize]
     [Route("api/OfficeProduct")]
     [ApiController]
     public class OfficeProductController : ControllerBase

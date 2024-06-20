@@ -6,8 +6,8 @@ namespace OnlineShop.Domain.Aggregates.SaleAggregates
     public class OrderDetail : MainEntityBase, IDbSetEntity
     {
         //Keys
-        public Guid ProductId { get; set; } // Assuming ProductId is the foreign key for Product
-        public Guid OrderHeaderId { get; set; } // Assuming OrderHeaderId is the foreign key for OrderHeader
+        public Guid ProductId { get; set; } 
+        public Guid OrderHeaderId { get; set; } 
 
         //Navigation 
         public Product Product { get; set; }

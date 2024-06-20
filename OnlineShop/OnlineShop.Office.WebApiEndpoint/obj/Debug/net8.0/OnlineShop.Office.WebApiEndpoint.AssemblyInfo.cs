@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OnlineShop.Office.WebApiEndpoint")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+976eb6195960652aee1103a2294582d43b506d66")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b418a9eb253762fa7b4dc5fa48716d3f27dccfb3")]
 [assembly: System.Reflection.AssemblyProductAttribute("OnlineShop.Office.WebApiEndpoint")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OnlineShop.Office.WebApiEndpoint")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

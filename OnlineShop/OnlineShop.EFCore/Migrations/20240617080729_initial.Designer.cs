@@ -12,7 +12,7 @@ using OnlineShop.EFCore;
 namespace OnlineShop.EFCore.Migrations
 {
     [DbContext(typeof(OnlineShopDbContext))]
-    [Migration("20240509060125_initial")]
+    [Migration("20240617080729_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -392,6 +392,14 @@ namespace OnlineShop.EFCore.Migrations
                             IsActive = false,
                             Name = "Seller",
                             NormalizedName = "SELLER"
+                        },
+                        new
+                        {
+                            Id = "5",
+                            ConcurrencyStamp = "5",
+                            IsActive = false,
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -455,6 +463,12 @@ namespace OnlineShop.EFCore.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastSignInTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastSignOutTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -521,7 +535,7 @@ namespace OnlineShop.EFCore.Migrations
                             AccessFailedCount = 0,
                             CellPhone = "09120816075",
                             CellPhoneConfirmed = false,
-                            ConcurrencyStamp = "f7b2cff5-70a9-4cc2-aecd-da99489d0b4a",
+                            ConcurrencyStamp = "a2033865-e951-4b8f-bf34-99866bdf85fe",
                             DateCreatedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModifiedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateSoftDeletedLatin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -534,9 +548,9 @@ namespace OnlineShop.EFCore.Migrations
                             LockoutEnabled = false,
                             NationalId = "0020325721",
                             NationalIdConfirmed = true,
-                            PasswordHash = "-1497969819",
+                            PasswordHash = "-106131394",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8e6f9a5b-7e62-4c7e-8519-629ef9d8c715",
+                            SecurityStamp = "8b80db68-6b3a-4d98-80ff-b408fc8691db",
                             TwoFactorEnabled = false,
                             UserName = "09120816075"
                         });

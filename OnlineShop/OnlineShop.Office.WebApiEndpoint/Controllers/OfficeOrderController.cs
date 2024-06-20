@@ -9,9 +9,11 @@ using OnlineShop.Application.Services.SaleServices;
 using OnlineShop.Domain.Aggregates.SaleAggregates;
 using ResponseFramework;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShop.Office.WebApiEndpoint.Controllers
 {
+    [Authorize]
     [Route("api/OfficeOrderManagement")]
     [ApiController]
     public class OfficeOrderController : ControllerBase

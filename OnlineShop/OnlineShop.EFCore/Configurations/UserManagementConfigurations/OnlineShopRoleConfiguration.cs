@@ -43,7 +43,14 @@ namespace OnlineShop.EFCore.Configurations.UserManagementConfigurations
                 Name = DatabaseConstants.DefaultRoles.SellerName,
                 NormalizedName = DatabaseConstants.DefaultRoles.SellerNormalizedName,
                 ConcurrencyStamp = DatabaseConstants.DefaultRoles.SellerConcurrencyStamp,
-            }
+            },
+               new OnlineShopRole()
+               {
+                   Id = DatabaseConstants.DefaultRoles.UserId,
+                   Name = DatabaseConstants.DefaultRoles.UserName,
+                   NormalizedName = DatabaseConstants.DefaultRoles.UserNormalizedName,
+                   ConcurrencyStamp = DatabaseConstants.DefaultRoles.UserConcurrencyStamp,
+               }
 
 
             );

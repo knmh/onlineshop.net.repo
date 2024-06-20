@@ -30,7 +30,7 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Bases
         //protected what is
         #region [Props]
         protected virtual TDbContext DbContext { get; set; }
-        protected virtual DbSet<TEntity> DbSet { get; set; }
+        protected virtual DbSet<TEntity> DbSet { get; set; } 
         #endregion
 
       
@@ -67,7 +67,7 @@ namespace OnlineShop.RepositoryDesignPattern.Frameworks.Bases
         #region [virtual async Task<IResponse<TEntity>> SelectByIdAsync(UPrimaryKey? id)]
         public virtual async Task<IResponse<TEntity>> SelectByIdAsync(UPrimaryKey? id)
         {
-            var entity = await DbSet.FindAsync(id);
+              var entity = await DbSet.FindAsync(id);
            // await SaveAsync();
             return new Response<TEntity>(entity);
         }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
+using OnlineShop.Application.Services.AAAServices;
 using OnlineShop.Application.Services.Contracts;
 using OnlineShop.Application.Services.SaleServices;
 using OnlineShop.Domain.Aggregates.SaleAggregates;
@@ -8,6 +9,9 @@ using OnlineShop.Domain.Aggregates.UserManagementAggregates;
 using OnlineShop.EFCore;
 using OnlineShop.RepositoryDesignPattern.Frameworks.Abstracts;
 using OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 #region [EF Service Configuration]
@@ -15,10 +19,39 @@ var connectionString = builder.Configuration.GetValue<string>("ConnectionStrings
 builder.Services.AddDbContext<OnlineShopDbContext>(c => c.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
 #endregion
+
+#region [- Config Authentication -]
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+});
+#endregion
+#region [- Config Jwt Bearer -]
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+    };
+});
+#endregion
 // Add services to the container.
 #region [Identity Service Configuration]
 builder.Services.AddIdentity<OnlineShopUser, OnlineShopRole>()
-    .AddEntityFrameworkStores<OnlineShopDbContext>();
+.AddEntityFrameworkStores<OnlineShopDbContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
@@ -35,11 +68,14 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 //builder.Services.AddScoped<IRepository<OrderDetail, Guid>, OrderDetailRepository>();
 //builder.Services.AddScoped<IRepository<OrderDetail, Guid>, OrderDetailRepository>();
 builder.Services.AddScoped<IRepository<ProductCategory, int>, ProductCategoryRepository>();
+
 #endregion
 #region [ApplicationService Lifetime Configuration]
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<OnlineShop.Application.Services.SaleServices.AccountService>();
+builder.Services.AddScoped<OnlineShop.Application.Services.SaleServices.UserService>();
 #endregion
 
 builder.Services.AddControllers();

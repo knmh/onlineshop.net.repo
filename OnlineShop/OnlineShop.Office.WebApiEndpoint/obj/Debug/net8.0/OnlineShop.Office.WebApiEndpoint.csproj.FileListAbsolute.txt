@@ -463,3 +463,4 @@ H:\OnlineShop.Net.repo1\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\ne
 H:\OnlineShop.Net.repo1\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.genruntimeconfig.cache
 H:\OnlineShop.Net.repo1\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\ref\OnlineShop.Office.WebApiEndpoint.dll
 H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\obj\Debug\net8.0\OnlineShop.Office.WebApiEndpoint.MvcApplicationPartsAssemblyInfo.cs
+H:\OnlineShop.Net.repo\OnlineShop\OnlineShop.Office.WebApiEndpoint\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

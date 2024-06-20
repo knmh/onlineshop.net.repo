@@ -58,6 +58,8 @@ namespace OnlineShop.EFCore.Migrations
                     IsModified = table.Column<bool>(type: "bit", nullable: false),
                     DateModifiedLatin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModifiedPersian = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastSignInTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastSignOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -369,14 +371,15 @@ namespace OnlineShop.EFCore.Migrations
                     { "1", "1", false, "GodAdmin", "GODADMIN" },
                     { "2", "2", false, "Admin", "ADMIN" },
                     { "3", "3", false, "Seller", "SELLER" },
-                    { "4", "4", false, "Buyer", "BUYER" }
+                    { "4", "4", false, "Buyer", "BUYER" },
+                    { "5", "5", false, "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "UserManagement",
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "CellPhone", "CellPhoneConfirmed", "ConcurrencyStamp", "DateCreatedLatin", "DateCreatedPersian", "DateModifiedLatin", "DateModifiedPersian", "DateSoftDeletedLatin", "DateSoftDeletedPersian", "Email", "EmailConfirmed", "FirstName", "IsActivated", "IsDeleted", "IsModified", "LastName", "Location", "LockoutEnabled", "LockoutEnd", "NationalId", "NationalIdConfirmed", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Picture", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "09120816075", false, "f7b2cff5-70a9-4cc2-aecd-da99489d0b4a", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "Hediyeh", false, false, false, "Kianmehr", null, false, null, "0020325721", true, null, null, "-1497969819", null, false, null, "8e6f9a5b-7e62-4c7e-8519-629ef9d8c715", false, "09120816075" });
+                columns: new[] { "Id", "AccessFailedCount", "CellPhone", "CellPhoneConfirmed", "ConcurrencyStamp", "DateCreatedLatin", "DateCreatedPersian", "DateModifiedLatin", "DateModifiedPersian", "DateSoftDeletedLatin", "DateSoftDeletedPersian", "Email", "EmailConfirmed", "FirstName", "IsActivated", "IsDeleted", "IsModified", "LastName", "LastSignInTime", "LastSignOutTime", "Location", "LockoutEnabled", "LockoutEnd", "NationalId", "NationalIdConfirmed", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Picture", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1", 0, "09120816075", false, "a2033865-e951-4b8f-bf34-99866bdf85fe", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "Hediyeh", false, false, false, "Kianmehr", null, null, null, false, null, "0020325721", true, null, null, "-106131394", null, false, null, "8b80db68-6b3a-4d98-80ff-b408fc8691db", false, "09120816075" });
 
             migrationBuilder.InsertData(
                 schema: "UserManagement",

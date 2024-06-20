@@ -30,6 +30,10 @@ namespace OnlineShop.Domain.Aggregates.UserManagementAggregates
         public bool IsModified { get; set; }
         public DateTime DateModifiedLatin { get; set; }
         public string? DateModifiedPersian { get; set; }
+        public DateTime? LastSignInTime { get; set; }
+        public DateTime? LastSignOutTime { get; set; }
+        
+
     }
 }
  

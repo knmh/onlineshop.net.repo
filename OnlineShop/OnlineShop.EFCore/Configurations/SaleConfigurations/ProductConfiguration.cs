@@ -19,63 +19,7 @@ namespace OnlineShop.EFCore.Configurations.SaleConfigurations
             builder.HasMany(p => p.ProductCategories)
             .WithOne(pc => pc.Product);
 
-            //builder.Property(p => p.IsDeleted)
-            //.HasDefaultValue(false);
-
-            //builder.HasQueryFilter(p => !p.IsDeleted);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //     builder.HasMany(p => p.ProductCategories)
-            //   .WithMany(pc => pc.Products)
-            //   .UsingEntity<ProductProductCategory>(
-            //j => j.HasOne(ppc => ppc.ProductCategory).WithMany(),
-            //j => j.HasOne(ppc => ppc.Product).WithMany()
-            //);
-
-
-
-
-
-            //builder.Property(p => p.Title)
-            //   .IsRequired()
-            //   .HasMaxLength(256);
-
-            //builder.Property(p => p.UnitPrice)
-
-            //    .HasColumnType("double");
-
-            //builder.Property(p => p.IsActivated)
-            //    .IsRequired()
-            //    .HasColumnName("IsActivated")
-            //    .HasColumnType("bit")
-            //    .HasDefaultValue(true);
-
-            //builder.Property(p => p.DateSoftDeletedLatin)
-            //    .HasColumnName("DateSoftDeleteLatin")
-            //    .HasColumnType("datetime2");
-
-            //builder.Property(p => p.DateSoftDeletedPersian)
-            //    .HasColumnName("DateSoftDeletePersian")
-            //    .HasColumnType("datetime2");
-
-
-            //builder.Property(p => p.EntityDescription)
-            //    .HasColumnName("EntityDescription")
-            //    .HasColumnType("nvarchar(max)");
-
-            //builder.HasIndex(p => p.Title).IsUnique();
+       
 
         }
     }

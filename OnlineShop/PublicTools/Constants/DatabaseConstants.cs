@@ -41,6 +41,12 @@ namespace PublicTools.Constants
             public const string BuyerNormalizedName = "BUYER";
             public const string BuyerConcurrencyStamp = "4";
 
+
+            public const string UserId = "5";
+            public const string UserName = "User";
+            public const string UserNormalizedName = "USER";
+            public const string UserConcurrencyStamp = "5";
+
         }
         #endregion
 

@@ -11,9 +11,9 @@ namespace OnlineShop.Application.Dtos.AAADtos
     {
         [Required]
         public string UserName { get; set; }
-        [Required]
+       // [Required]
         public string Password { get; set; }
-        public bool RememberMe { get; set; }
-        public string RedirectUrl { get; set; }
+        //public bool RememberMe { get; set; }
+        //public string RedirectUrl { get; set; }
     }
 }

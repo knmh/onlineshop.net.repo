@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\OfficeUserController.cs\**" />
+    <Content Remove="Controllers\OfficeUserController.cs\**" />
+    <EmbeddedResource Remove="Controllers\OfficeUserController.cs\**" />
+    <None Remove="Controllers\OfficeUserController.cs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
       <PrivateAssets>all</PrivateAssets>

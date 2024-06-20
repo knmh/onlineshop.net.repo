@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Application.Dtos.AAADtos;
 using OnlineShop.Application.Services.AAAServices;
+using OnlineShop.Application.Services.Contracts.IService;
 
 namespace OnlineShop.Backoffice.WebApiEndpoint.Controllers
 {
@@ -36,30 +38,38 @@ namespace OnlineShop.Backoffice.WebApiEndpoint.Controllers
         #endregion
 
         #region [Logout()]
-        [HttpPost("logout", Name = "Logout")]
-        public async Task<IActionResult> Logout()
-        {
-            string authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
 
-            if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
-            {
-                return BadRequest("Token is missing or invalid.");
-            }
+        //public async Task<IActionResult> Logout()
+        //{
+        //    string authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
 
-            string token = authorizationHeader.Substring("Bearer ".Length);
+        //    if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
+        //    {
+        //        return BadRequest("Token is missing or invalid.");
+        //    }
 
-            try
+        //    string token = authorizationHeader.Substring("Bearer ".Length);
+
+        //    try
+        //    {
+        //        await _accountService.LogoutAsync(token);
+        //        return Ok("User logged out successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error logging out: {ex.Message}");
+        //        return StatusCode(500, "An error occurred while logging out.");
+        //    }
+            //}
+            [Authorize]
+            [HttpPost("logout", Name = "Logout")]
+            public async Task<IActionResult> LogoutAsync()
             {
-                await _accountService.LogoutAsync(token);
-                return Ok("User logged out successfully.");
+                var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                _accountService.ExpireToken(token);
+                return Ok();
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error logging out: {ex.Message}");
-                return StatusCode(500, "An error occurred while logging out.");
-            }
+            #endregion
         }
-        #endregion
-    }
 }
 
