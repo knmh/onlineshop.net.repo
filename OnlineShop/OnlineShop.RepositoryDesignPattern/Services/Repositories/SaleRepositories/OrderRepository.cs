@@ -30,7 +30,7 @@ namespace OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositor
             {
                 var order = await DbContext.Set<OrderHeader>()
                     .Include(o => o.OrderDetails)
-                    .FirstOrDefaultAsync(o => o.Id == orderId);
+                    .FirstOrDefaultAsync(o => (includeDeleted || !o.IsDeleted) && o.Id == orderId);
 
                 if (order != null)
                 {
@@ -67,8 +67,6 @@ namespace OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositor
         }
         #endregion
 
-
-     
         #region [IsProductUsedInOrderDetails]
         public async Task<bool> IsProductUsedInOrderDetails(Guid productId)
         {
@@ -78,6 +76,26 @@ namespace OnlineShop.RepositoryDesignPattern.Services.Repositories.SaleRepositor
         #endregion
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
 

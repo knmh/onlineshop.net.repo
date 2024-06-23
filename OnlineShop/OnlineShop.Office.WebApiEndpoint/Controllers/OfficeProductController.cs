@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Application.Dtos.SaleDtos.ProductAppDtos;
 using OnlineShop.Application.Services.Contracts;
+using OnlineShop.Application.Services.SaleServices;
 using PublicTools.Resources;
 using ResponseFramework;
 
@@ -15,12 +16,14 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
     {
         #region [Private State] 
         private readonly IProductService _productService;
+        private readonly AccountService _accountService;
         #endregion
 
         #region [Ctor]
-        public OfficeProductController(IProductService productService)
+        public OfficeProductController(IProductService productService, AccountService accountService)
         {
             _productService = productService;
+            _accountService= accountService;
         }
         #endregion
 
@@ -67,6 +70,15 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpPost(Name = "PostProduct")]
         public async Task<IActionResult> Post(PostProductAppDto model)
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
+            if (!await _accountService.IsTokenValidAsync(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_InvalidToken));
+            }
             Guard(model);
             var postResult = await _productService.Post(model);
             return new JsonResult(postResult);
@@ -76,6 +88,15 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpPut(Name = "PutProduct")]
         public async Task<IActionResult> Put(PutProductAppDto model)
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
+            if (!await _accountService.IsTokenValidAsync(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_InvalidToken));
+            }
             Guard(model);
             var putResult = await _productService.Put(model);
             return new JsonResult(putResult);
@@ -85,6 +106,15 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpDelete(Name = "DeleteProduct")]
         public async Task<IActionResult> Delete(DeleteProductAppDto model)
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
+            if (!await _accountService.IsTokenValidAsync(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_InvalidToken));
+            }
             if (model.Id.Equals(null)) return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
             var deleteResult = await _productService.Delete(model);
             return new JsonResult(deleteResult);
@@ -94,6 +124,15 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpGet(Name = "GetProduct")]
         public async Task<IActionResult> GetAll()
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
+            if (!await _accountService.IsTokenValidAsync(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_InvalidToken));
+            }
             var getAllResult = await _productService.GetAll();
             return new JsonResult(getAllResult);
         }

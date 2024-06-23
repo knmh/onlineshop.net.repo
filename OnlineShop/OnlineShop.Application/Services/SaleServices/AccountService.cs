@@ -80,12 +80,12 @@ namespace OnlineShop.Application.Services.SaleServices
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.UtcNow.AddHours(3), // Use UTC time
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-            );
+               issuer: _configuration["JWT:ValidIssuer"],
+               audience: _configuration["JWT:ValidAudience"],
+               expires: DateTime.UtcNow.AddHours(3), // Use UTC time
+               claims: authClaims,
+               signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+           );
 
             return token;
         }
@@ -107,8 +107,8 @@ namespace OnlineShop.Application.Services.SaleServices
                     jwtToken.Issuer,
                     audience,
                     jwtToken.Claims,
-                    DateTime.UtcNow.AddSeconds(-1),// Use the current UTC time
-                    DateTime.UtcNow, // Set the expiration time to 1 second in the past
+                    DateTime.UtcNow, // Use the current UTC time
+                    DateTime.UtcNow.AddSeconds(-1), // Set the expiration time to 1 second in the past
                     jwtToken.SigningCredentials
                 );
 
@@ -116,9 +116,42 @@ namespace OnlineShop.Application.Services.SaleServices
                 token = new JwtSecurityTokenHandler().WriteToken(newToken);
             }
         }
+        #endregion
+        
+        #region [IsTokenValidAsync(string token)]
+       public async Task<bool> IsTokenValidAsync(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            try
+            {
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration["JWT:ValidIssuer"],
+                    ValidateAudience = true,
+                    ValidAudience = _configuration["JWT:ValidAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+
+                handler.ValidateToken(token, validationParameters, out _);
+                return true;
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                // Token is expired
+                return false;
+            }
+            catch (Exception)
+            {
+                // Token is invalid
+                return false;
+            }
         }
         #endregion
-
-
     }
+
+
+}
 

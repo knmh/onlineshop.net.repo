@@ -115,6 +115,15 @@ namespace PublicTools.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to InvalidToken.
+        /// </summary>
+        public static string Error_InvalidToken {
+            get {
+                return ResourceManager.GetString("Error_InvalidToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mandatory field. Please fill out this field..
         /// </summary>
         public static string Error_MandatoryField {
@@ -129,6 +138,15 @@ namespace PublicTools.Resources {
         public static string Error_MaxLengthField {
             get {
                 return ResourceManager.GetString("Error_MaxLengthField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NoAuthorization.
+        /// </summary>
+        public static string Error_NoAuthorization {
+            get {
+                return ResourceManager.GetString("Error_NoAuthorization", resourceCulture);
             }
         }
         

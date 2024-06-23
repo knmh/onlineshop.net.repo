@@ -61,6 +61,11 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpPost(Name = "PostProductCategory")]
         public async Task<IActionResult> Post(PostProductCategoryAppDto model)
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
             Guard(model);
             var postResult = await _productCategoryService.Post(model);
             return new JsonResult(postResult);
@@ -70,6 +75,11 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpPut(Name = "PutProductCategory")]
         public async Task<IActionResult> Put(PutProductCategoryAppDto model)
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
             Guard(model);
             var putResult = await _productCategoryService.Put(model);
             return new JsonResult(putResult);
@@ -79,6 +89,11 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpDelete(Name = "DeleteProductCategory")]
         public async Task<IActionResult> Delete(DeleteProductCategoryAppDto model)
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
             if (model.Id.Equals(null)) return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_MandatoryField));
             var deleteResult = await _productCategoryService.Delete(model);
             return new JsonResult(deleteResult);
@@ -88,6 +103,11 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         [HttpGet(Name = "GetProductCategory")]
         public async Task<IActionResult> GetAll()
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            if (string.IsNullOrEmpty(token))
+            {
+                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+            }
             var getAllResult = await _productCategoryService.GetAll();
             return new JsonResult(getAllResult);
         }

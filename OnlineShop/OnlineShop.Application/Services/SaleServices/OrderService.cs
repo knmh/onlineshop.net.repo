@@ -102,8 +102,11 @@ namespace OnlineShop.Application.Services.SaleServices
 
                         foreach (var detail in orderWithDetails.OrderDetails)
                         {
-                            // Find the corresponding OrderDetail in the OrderHeader entity
-                            var orderDetail = orderHeader.Result.OrderDetails.FirstOrDefault(d => d.ProductId == detail.ProductId && d.OrderHeaderId == orderWithDetails.OrderHeader.Id && !d.IsDeleted);
+                            
+                            var orderDetail = orderHeader.Result.OrderDetails.FirstOrDefault(d => d.ProductId
+                            == 
+                            detail.ProductId && d.OrderHeaderId == orderWithDetails.OrderHeader.Id && 
+                            !d.IsDeleted);
                             if (orderDetail != null && !orderHeader.Result.IsDeleted)
                             {
                                 orderDetail.Code = detail.Code;
@@ -143,7 +146,7 @@ namespace OnlineShop.Application.Services.SaleServices
 
             #region [Returning]
             return new Response<object>(
-                new { Orders = model.Orders },
+                new { OrderHeaderWithOrderDetail = model.Orders },
                 true,
                 PublicTools.Resources.MessageResource.Info_SuccessfullProcess,
                 string.Empty,
@@ -152,108 +155,14 @@ namespace OnlineShop.Application.Services.SaleServices
             #endregion
         }
         #endregion
-        #region [GetAll]
-        public async Task<IResponse<List<GetAllOrderAppDto>>> GetAll()
-        {
-            #region [Task]
-
-            try
-            {
-                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                {
-                    var getAllOrderResult = await _orderRepository.SelectAllWithDetailsAsync(true);
-
-                    if (!getAllOrderResult.IsSuccessful)
-                    {
-                        return new Response<List<GetAllOrderAppDto>>(MessageResource.Error_FailProcess);
-                    }
-
-                    var orders = getAllOrderResult.Result
-            .Where(header => !header.IsDeleted && header.OrderDetails.All(detail => !detail.IsDeleted))
-            .Select(header =>
-            {
-                var orderDetails = header.OrderDetails.Select(detail => new GetAllOrderDetailAppDto
-                {
-                    Code = detail.Code,
-                    Title = detail.Title,
-                    EntityDescription = detail.EntityDescription,
-                    IsActivated = detail.IsActivated,
-                    DateCreatedLatin = detail.DateCreatedLatin,
-                    DateCreatedPersian = detail.DateCreatedPersian,
-                    IsModified = detail.IsModified,
-                    DateModifiedLatin = detail.DateModifiedLatin,
-                    DateModifiedPersian = detail.DateModifiedPersian,
-                    IsDeleted = detail.IsDeleted,
-                    DateSoftDeletedLatin = detail.DateSoftDeletedLatin,
-                    DateSoftDeletedPersian = detail.DateSoftDeletedPersian,
-                    UnitPrice = detail.UnitPrice,
-                    ProductId = detail.ProductId
-                }).ToList();
-
-                return new GetAllOrderAppDto
-                {
-                    Orders = new List<GetAllOrderHeaderWithOrderDetailAppDto>
-                    {
-                new GetAllOrderHeaderWithOrderDetailAppDto
-                {
-                    OrderHeaders = new List<GetAllOrderHeaderAppDto>
-                    {
-                        new GetAllOrderHeaderAppDto
-                        {
-                            Id = header.Id,
-                            Code = header.Code,
-                            Title = header.Title,
-                            EntityDescription = header.EntityDescription,
-                            IsActivated = header.IsActivated,
-                            DateCreatedLatin = header.DateCreatedLatin,
-                            DateCreatedPersian = header.DateCreatedPersian,
-                            IsModified = header.IsModified,
-                            DateModifiedLatin = header.DateModifiedLatin,
-                            DateModifiedPersian = header.DateModifiedPersian,
-                            IsDeleted = header.IsDeleted,
-                            DateSoftDeletedLatin = header.DateSoftDeletedLatin,
-                            DateSoftDeletedPersian = header.DateSoftDeletedPersian,
-                            SellerUserId = header.SellerUserId,
-                            SellerRoleId = header.SellerRoleId,
-                            BuyerUserId = header.BuyerUserId,
-                            BuyerRoleId = header.BuyerRoleId
-                        }
-                    },
-                    OrderDetails = orderDetails
-                }
-                    }
-                };
-            }).ToList();
-                    scope.Complete();
-
-
-                    #endregion
-                    #region [Returning]
-                    return new Response<List<GetAllOrderAppDto>>(
-                    orders,
-                    true,
-                    PublicTools.Resources.MessageResource.Info_SuccessfullProcess,
-                    string.Empty,
-                    HttpStatusCode.OK
-            );
-                }
-            }
-            catch (Exception)
-            {
-
-                return new Response<List<GetAllOrderAppDto>>(MessageResource.Error_FailProcess);
-
-            }
-            #endregion
-        }
-        #endregion
+       
         #region [Delete]
         public async Task<IResponse<object>> Delete(DeleteOrderAppDto model)
         {
             #region [Task]
 
             using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
+            { 
                 try
                 {
 
@@ -343,7 +252,7 @@ namespace OnlineShop.Application.Services.SaleServices
                         var seller = await _userManager.FindByIdAsync(headerModel.OrderHeader.SellerUserId);
                         var sellerRole = await _roleManager.FindByIdAsync(headerModel.OrderHeader.SellerRoleId);
 
-                        // Retrieve the user and role information for the buyer
+                     
                         var buyer = await _userManager.FindByIdAsync(headerModel.OrderHeader.BuyerUserId);
                         var buyerRole = await _roleManager.FindByIdAsync(headerModel.OrderHeader.BuyerRoleId);
                         var orderHeader = new OrderHeader()
@@ -413,7 +322,7 @@ namespace OnlineShop.Application.Services.SaleServices
                     scope.Complete();
                     #region [Returning]
                     return new Response<object>(
-                        new { Orders = model.Orders },
+                        new { OrderHeaderWithOrderDetail = model.Orders },
                         true,
                         PublicTools.Resources.MessageResource.Info_SuccessfullProcess,
                         string.Empty,
@@ -434,6 +343,93 @@ namespace OnlineShop.Application.Services.SaleServices
         #endregion
 
         #endregion
+
+        #region [GetAll]
+        public async Task<IResponse<List<GetAllOrderAppDto>>> GetAll()
+        {
+            #region [Task]
+            try
+            {
+                var getAllOrderResult = await _orderRepository.SelectAllWithDetailsAsync(true);
+
+                if (!getAllOrderResult.IsSuccessful)
+                {
+                    return new Response<List<GetAllOrderAppDto>>(MessageResource.Error_FailProcess);
+                }
+
+                var orders = getAllOrderResult.Result
+                    .Where(header => !header.IsDeleted && header.OrderDetails.All(detail => !detail.IsDeleted))
+                    .Select(header =>
+                    {
+                        var orderDetails = header.OrderDetails.Select(detail => new GetAllOrderDetailAppDto
+                        {
+                            Code = detail.Code,
+                            Title = detail.Title,
+                            EntityDescription = detail.EntityDescription,
+                            IsActivated = detail.IsActivated,
+                            DateCreatedLatin = detail.DateCreatedLatin,
+                            DateCreatedPersian = detail.DateCreatedPersian,
+                            IsModified = detail.IsModified,
+                            DateModifiedLatin = detail.DateModifiedLatin,
+                            DateModifiedPersian = detail.DateModifiedPersian,
+                            IsDeleted = detail.IsDeleted,
+                            DateSoftDeletedLatin = detail.DateSoftDeletedLatin,
+                            DateSoftDeletedPersian = detail.DateSoftDeletedPersian,
+                            UnitPrice = detail.UnitPrice,
+                            ProductId = detail.ProductId
+                        }).ToList();
+
+                        return new GetAllOrderAppDto
+                        {
+                            Orders = new List<GetAllOrderHeaderWithOrderDetailAppDto>
+                            {
+                        new GetAllOrderHeaderWithOrderDetailAppDto
+                        {
+                            OrderHeaders = new List<GetAllOrderHeaderAppDto>
+                            {
+                                new GetAllOrderHeaderAppDto
+                                {
+                                   Id = header.Id,
+                            Code = header.Code,
+                            Title = header.Title,
+                            EntityDescription = header.EntityDescription,
+                            IsActivated = header.IsActivated,
+                            DateCreatedLatin = header.DateCreatedLatin,
+                            DateCreatedPersian = header.DateCreatedPersian,
+                            IsModified = header.IsModified,
+                            DateModifiedLatin = header.DateModifiedLatin,
+                            DateModifiedPersian = header.DateModifiedPersian,
+                            IsDeleted = header.IsDeleted,
+                            DateSoftDeletedLatin = header.DateSoftDeletedLatin,
+                            DateSoftDeletedPersian = header.DateSoftDeletedPersian,
+                            SellerUserId = header.SellerUserId,
+                            SellerRoleId = header.SellerRoleId,
+                            BuyerUserId = header.BuyerUserId,
+                            BuyerRoleId = header.BuyerRoleId
+                                }
+                            },
+                            OrderDetails = orderDetails
+                        }
+                            }
+                        };
+                    }).ToList();
+
+                return new Response<List<GetAllOrderAppDto>>(
+                    orders,
+                    true,
+                    PublicTools.Resources.MessageResource.Info_SuccessfullProcess,
+                    string.Empty,
+                    HttpStatusCode.OK
+                );
+            }
+            catch (Exception ex)
+            {
+                return new Response<List<GetAllOrderAppDto>>(null, false, PublicTools.Resources.MessageResource.Error_FailProcess, ex.Message, HttpStatusCode.InternalServerError);
+            }
+            #endregion
+        }
+        #endregion
+
 
     }
 
