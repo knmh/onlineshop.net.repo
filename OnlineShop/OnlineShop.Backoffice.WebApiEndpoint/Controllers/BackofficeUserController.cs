@@ -8,7 +8,7 @@ using System.Data;
 
 namespace OnlineShop.Backoffice.WebApiEndpoint.Controllers
 {
-    [Authorize]
+   [Authorize]
     [Route("api/BackofficeUser")]
     [ApiController]
     public class BackofficeUserController : ControllerBase

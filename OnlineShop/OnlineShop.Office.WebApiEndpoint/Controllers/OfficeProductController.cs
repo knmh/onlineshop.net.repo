@@ -121,21 +121,35 @@ namespace OnlineShop.Office.WebApiEndpoint.Controllers
         }
         #endregion
         #region [GetAll()]
+        
         [HttpGet(Name = "GetProduct")]
         public async Task<IActionResult> GetAll()
         {
             var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (string.IsNullOrEmpty(token))
             {
-                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
+                return Unauthorized(new Response<object>(PublicTools.Resources.MessageResource.Error_NoAuthorization));
             }
+
             if (!await _accountService.IsTokenValidAsync(token))
             {
-                return new JsonResult(new Response<object>(PublicTools.Resources.MessageResource.Error_InvalidToken));
+                return Unauthorized(new Response<object>(PublicTools.Resources.MessageResource.Error_InvalidToken));
             }
+
             var getAllResult = await _productService.GetAll();
-            return new JsonResult(getAllResult);
+            if (!getAllResult.IsSuccessful)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response<object>(PublicTools.Resources.MessageResource.Error_FailProcess));
+            }
+
+            if (getAllResult.Result == null)
+            {
+                return NotFound(new Response<object>(MessageResource.Error_FailProcess));
+            }
+
+            return Ok(getAllResult);
         }
         #endregion
+  
     }
 }

@@ -22,14 +22,17 @@ namespace OnlineShop.Application.Services.SaleServices
         private readonly UserManager<OnlineShopUser> _userManager;
         private readonly SignInManager<OnlineShopUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<AccountService> _logger;
+
         #endregion
 
         #region [Ctor]
-        public AccountService(UserManager<OnlineShopUser> userManager, SignInManager<OnlineShopUser> signInManager, IConfiguration configuration)
+        public AccountService(UserManager<OnlineShopUser> userManager, SignInManager<OnlineShopUser> signInManager, IConfiguration configuration, ILogger<AccountService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _logger = logger;
         }
         #endregion
 
@@ -59,7 +62,7 @@ namespace OnlineShop.Application.Services.SaleServices
         };
 
                 // Generate a token
-                var token = GenerateToken(authClaims);
+                var token = GenerateToken(authClaims, user.Id);
 
                 // Return the token or perform other actions
                 return new AuthenticateResponseAppDto
@@ -73,19 +76,18 @@ namespace OnlineShop.Application.Services.SaleServices
             return null;
         }
         #endregion
-
         #region [GenerateToken(List<Claim> authClaims)]
-        private JwtSecurityToken GenerateToken(List<Claim> authClaims)
+        private JwtSecurityToken GenerateToken(List<Claim> authClaims, string userId)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
-               issuer: _configuration["JWT:ValidIssuer"],
-               audience: _configuration["JWT:ValidAudience"],
-               expires: DateTime.UtcNow.AddHours(3), // Use UTC time
-               claims: authClaims,
-               signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-           );
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                expires: DateTime.UtcNow.AddHours(3),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            );
 
             return token;
         }
@@ -99,57 +101,59 @@ namespace OnlineShop.Application.Services.SaleServices
 
             if (jwtToken != null)
             {
-                // Assuming you have a single audience, you can use the first one from the original token
                 string audience = jwtToken.Audiences.FirstOrDefault();
-
-                // Create a new token with the same claims but an expired expiration time
+             
                 var newToken = new JwtSecurityToken(
                     jwtToken.Issuer,
                     audience,
                     jwtToken.Claims,
-                    DateTime.UtcNow, // Use the current UTC time
-                    DateTime.UtcNow.AddSeconds(-1), // Set the expiration time to 1 second in the past
+                    DateTime.UtcNow,
+                    DateTime.UtcNow,
                     jwtToken.SigningCredentials
                 );
-
-                // Replace the original token with the new, expired token
                 token = new JwtSecurityTokenHandler().WriteToken(newToken);
             }
         }
         #endregion
-        
+
+       
         #region [IsTokenValidAsync(string token)]
-       public async Task<bool> IsTokenValidAsync(string token)
+        public async Task<bool> IsTokenValidAsync(string token)
         {
-            var handler = new JwtSecurityTokenHandler();
             try
             {
+                var handler = new JwtSecurityTokenHandler();
                 var validationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = _configuration["JWT:ValidIssuer"],
-                    ValidateAudience = true,
-                    ValidAudience = _configuration["JWT:ValidAudience"],
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])),
-                    ValidateLifetime = true,
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration["JWT:Issuer"],
+                    ValidateAudience = true,
+                    // Assuming _configuration["JWT:Audience"] is a single string value
+                    ValidAudiences = new[] { _configuration["JWT:Audience"] }, // Use this if you have a single audience
+                                                                               // If you have multiple audiences, you can add them like this:
+                                                                               // ValidAudiences = new[] { "audience1", "audience2", "audience3" },
                     ClockSkew = TimeSpan.Zero
                 };
 
-                handler.ValidateToken(token, validationParameters, out _);
-                return true;
+                // If the audience configuration is empty or not set, this will prevent the exception
+                if (string.IsNullOrEmpty(validationParameters.ValidAudiences.FirstOrDefault()))
+                {
+                    throw new Exception("The 'ValidAudiences' configuration is empty or not set.");
+                }
+
+                var principal = handler.ValidateToken(token, validationParameters, out var securityToken);
+                return principal.Identity.IsAuthenticated;
             }
-            catch (SecurityTokenExpiredException)
+            catch (Exception ex)
             {
-                // Token is expired
-                return false;
-            }
-            catch (Exception)
-            {
-                // Token is invalid
+                _logger.LogError(ex, "Error validating token");
                 return false;
             }
         }
         #endregion
+  
     }
 
 

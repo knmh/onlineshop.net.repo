@@ -21,16 +21,19 @@
             private readonly RoleManager<OnlineShopRole> _roleManager;
             private readonly IConfiguration _configuration;
             private readonly ILogger<AccountService> _logger;
+             private readonly JwtSecurityTokenHandler _jwtTokenHandler; // Add this line
+
         //private readonly List<(string, DateTime)> _blacklistedTokens = new List<(string, DateTime)>();
         #endregion
-            #region [Ctor]
+        #region [Ctor]
         public AccountService(UserManager<OnlineShopUser> userManager, RoleManager<OnlineShopRole> roleManager, IConfiguration configuration, ILogger<AccountService> logger)
             {
                 _userManager = userManager;
                 _roleManager = roleManager;
                 _configuration = configuration;
                 _logger = logger;
-            }
+               _jwtTokenHandler = new JwtSecurityTokenHandler();
+        }
             #endregion
 
             #region [LoginAsync(LoginAppDto model)]
@@ -82,37 +85,7 @@
         }
         #endregion
 
-        //public async Task LogoutAsync(string token)
-        //{
-        //    try
-        //    {
-        //        var (existingToken, expiration) = _blacklistedTokens.FirstOrDefault(t => t.Item1 == token);
-        //        if (existingToken != null && expiration > DateTime.Now)
-        //        {
-        //            _logger.LogInformation("Token is already in the blacklist.");
-        //            return;
-        //        }
 
-        //        var tokenExpiration = new JwtSecurityTokenHandler().ReadJwtToken(token).ValidTo;
-        //        _blacklistedTokens.Add((token, tokenExpiration));
-        //        _logger.LogInformation("User logged out successfully.");
-        //        _blacklistedTokens.RemoveAll(t => t.Item2 <= DateTime.Now);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error occurred during logout.");
-        //        throw;
-        //    }
-        //}
-
-        //public bool IsTokenValid(string token)
-        //{
-        //    var (existingToken, expiration) = _blacklistedTokens.FirstOrDefault(t => t.Item1 == token);
-        //    var isTokenBlacklisted = existingToken != null && expiration > DateTime.Now;
-        //    var isTokenInvalidated = !isTokenBlacklisted && _blacklistedTokens.Any(t => t.Item1 == token);
-
-        //    return !isTokenInvalidated;
-        //}
 
         public void ExpireToken(string token)
         {
@@ -121,20 +94,16 @@
 
             if (jwtToken != null)
             {
-                // Assuming you have a single audience, you can use the first one from the original token
                 string audience = jwtToken.Audiences.FirstOrDefault();
 
-                // Create a new token with the same claims but an expired expiration time
                 var newToken = new JwtSecurityToken(
                     jwtToken.Issuer,
                     audience,
                     jwtToken.Claims,
-                    DateTime.UtcNow.AddSeconds(-1),// Use the current UTC time
-                    DateTime.UtcNow, // Set the expiration time to 1 second in the past
+                    DateTime.UtcNow,
+                    DateTime.UtcNow,
                     jwtToken.SigningCredentials
                 );
-
-                // Replace the original token with the new, expired token
                 token = new JwtSecurityTokenHandler().WriteToken(newToken);
             }
         }
